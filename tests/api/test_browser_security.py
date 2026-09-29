@@ -1,8 +1,9 @@
 import asyncio
 
-from contentstudio.browser_security import browser_write_guard
 from fastapi import Request
 from fastapi.responses import JSONResponse
+
+from contentstudio.browser_security import browser_write_guard
 
 
 def _guard_status(path: str, headers: dict[str, str]) -> int:

@@ -34,8 +34,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install locked API dependencies
+        run: |
+          python -m pip install uv==0.11.28
+          uv sync --project apps/api --locked --extra dev
       - name: Workflow and simulator contracts
-        run: python -m unittest discover -s tests/workflows -v
+        run: uv run --project apps/api python -m unittest discover -s tests/workflows -v
       - name: Validate n8n exports
         run: python scripts/n8n/bootstrap.py --dry-run
       - name: Evaluate deterministic fixture cases
