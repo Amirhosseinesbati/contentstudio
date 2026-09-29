@@ -1,0 +1,382 @@
+{
+  "id": "contentstudio_reconcile_v1",
+  "name": "ContentStudio / Reconcile uncertain drafts",
+  "nodes": [
+    {
+      "id": "6f5218f6-6840-588b-9e14-c9cc2729ab6a",
+      "name": "Unknown outcome",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -20
+      ],
+      "parameters": {
+        "content": "## Read before retry\nSearch WordPress by stable slug. Matching drafts close the ledger. Missing drafts remain in the business exception queue for an operator; this workflow never replays an ambiguous write.",
+        "height": 180,
+        "width": 680
+      }
+    },
+    {
+      "id": "bcb613cc-a18b-56eb-9f58-45db3c4c71d6",
+      "name": "Check uncertain actions",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        40,
+        220
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3fda0620-342c-51af-9e82-8b54a1b38003",
+      "name": "Replay reconciliation fixture",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        40,
+        430
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contentstudio/reconcile-demo",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {
+          "noResponseBody": true,
+          "responseCode": {
+            "values": {
+              "responseCode": "customCode",
+              "customCode": 202
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      },
+      "webhookId": "53adf43c-4abd-5655-8977-f583cf3719d5"
+    },
+    {
+      "id": "2687ccd3-dc00-5967-925b-fb0a729680a8",
+      "name": "List reconcilable workspaces",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        220
+      ],
+      "parameters": {
+        "url": "__API_BASE_URL__/internal/workflows/workspaces",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "6448a8a8-0055-5c8f-b16b-d1f7fbac2ea1",
+      "name": "Expand reconciliation workspaces",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return ($input.first().json.items || []).map(workspace => ({json: {workspace_id: workspace.id}, pairedItem: {item: 0}}));"
+      }
+    },
+    {
+      "id": "c2fb584f-886e-57d2-a3a6-fc39d2fc1525",
+      "name": "Find uncertain drafts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        220
+      ],
+      "parameters": {
+        "url": "__API_BASE_URL__/internal/workflows/reconcile",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "workspace_id",
+              "value": "={{ $json.workspace_id }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "55e51538-85a4-5294-8a5d-3fc6f5dd9e55",
+      "name": "Expand uncertain drafts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1160,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().flatMap((row, i) => (row.json.items || []).map(item => ({json: item, pairedItem: {item: i}})));"
+      }
+    },
+    {
+      "id": "1e468873-bd0a-554f-adf8-cbbe28b172ca",
+      "name": "Find WordPress draft by slug",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1450,
+        220
+      ],
+      "parameters": {
+        "url": "__WORDPRESS_BASE_URL__/wp-json/wp/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "slug",
+              "value": "={{ $json.slug }}"
+            },
+            {
+              "name": "status",
+              "value": "draft"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "__WORDPRESS_CREDENTIAL_ID__",
+          "name": "ContentStudio WordPress draft"
+        }
+      }
+    },
+    {
+      "id": "a9a85cc4-44ef-599e-8753-8c373de1823c",
+      "name": "Found matching draft?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1740,
+        220
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34454b31-b091-505a-80c8-e445c479437e",
+              "leftValue": "={{ $json.statusCode === 200 && Array.isArray($json.body) && $json.body.length === 1 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "4511e6c6-1859-57f0-998e-fa75a28b774a",
+      "name": "Resolve dispatch ledger",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2030,
+        80
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/dispatch/complete",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Expand uncertain drafts').item.json.workspace_id, operation_key: $('Expand uncertain drafts').item.json.operation_key, external_id: String($json.body[0].id), status: 'draft'}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Check uncertain actions": {
+      "main": [
+        [
+          {
+            "node": "List reconcilable workspaces",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replay reconciliation fixture": {
+      "main": [
+        [
+          {
+            "node": "List reconcilable workspaces",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List reconcilable workspaces": {
+      "main": [
+        [
+          {
+            "node": "Expand reconciliation workspaces",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand reconciliation workspaces": {
+      "main": [
+        [
+          {
+            "node": "Find uncertain drafts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find uncertain drafts": {
+      "main": [
+        [
+          {
+            "node": "Expand uncertain drafts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand uncertain drafts": {
+      "main": [
+        [
+          {
+            "node": "Find WordPress draft by slug",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find WordPress draft by slug": {
+      "main": [
+        [
+          {
+            "node": "Found matching draft?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Found matching draft?": {
+      "main": [
+        [
+          {
+            "node": "Resolve dispatch ledger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": false,
+    "errorWorkflow": "__workflow:error_handler__"
+  },
+  "active": false,
+  "pinData": {}
+}

@@ -1,0 +1,13 @@
+{
+  "label": "Synthetic demo presentation",
+  "source_key": "onboarding",
+  "narrator_voice": "Microsoft David Desktop",
+  "speech_rate_setting": 5,
+  "duration_ms": 600000,
+  "width": 1280,
+  "height": 720,
+  "segment_count": 20,
+  "media_sha256": "a3e8c8427962c7aee9cc0379fcdc9bf8804d41e5329d869701eb14af88005818",
+  "method": "Windows SAPI + Pillow slides + FFmpeg",
+  "limitations": "Synthetic narration, not a human webinar; transcript timing measured at segment boundaries only"
+}

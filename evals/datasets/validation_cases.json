@@ -1,0 +1,1922 @@
+[
+  {
+    "case_id": "case-001",
+    "split": "development",
+    "template_group": "development-altered_number-0",
+    "source_key": "onboarding",
+    "source_segment_index": 0,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 203 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "onboarding:0"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-002",
+    "split": "development",
+    "template_group": "development-unsupported_statistic-0",
+    "source_key": "onboarding",
+    "source_segment_index": 3,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "onboarding:3"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-003",
+    "split": "development",
+    "template_group": "development-quote_drift-0",
+    "source_key": "onboarding",
+    "source_segment_index": 6,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"A follow-up question is what could mak definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "onboarding:6"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-004",
+    "split": "development",
+    "template_group": "development-missing_attribution-0",
+    "source_key": "onboarding",
+    "source_segment_index": 9,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: some outcomes depend on data ",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-005",
+    "split": "development",
+    "template_group": "development-negation_removed_by_clipping-0",
+    "source_key": "onboarding",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 32832
+      },
+      "source_segment_ids": [
+        "onboarding:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-006",
+    "split": "development",
+    "template_group": "development-corrected_transcript-0",
+    "source_key": "onboarding",
+    "source_segment_index": 15,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: do not erase the ea",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:onboarding:15"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-007",
+    "split": "development",
+    "template_group": "development-render_failure-0",
+    "source_key": "onboarding",
+    "source_segment_index": 18,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: small pilots should",
+          "source_segment_ids": [
+            "onboarding:18"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: small pilots should",
+          "source_segment_ids": [
+            "onboarding:18"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: small pilots should",
+          "source_segment_ids": [
+            "onboarding:18"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: small pilots should",
+          "source_segment_ids": [
+            "onboarding:18"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: small pilots should",
+          "source_segment_ids": [
+            "onboarding:18"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "onboarding:18"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-008",
+    "split": "development",
+    "template_group": "development-duplicate_publishing-0",
+    "source_key": "onboarding",
+    "source_segment_index": 1,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-0",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-009",
+    "split": "development",
+    "template_group": "development-altered_number-1",
+    "source_key": "energy",
+    "source_segment_index": 13,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 193 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "energy:13"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-010",
+    "split": "development",
+    "template_group": "development-unsupported_statistic-1",
+    "source_key": "privacy",
+    "source_segment_index": 7,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "privacy:7"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-011",
+    "split": "development",
+    "template_group": "development-quote_drift-1",
+    "source_key": "privacy",
+    "source_segment_index": 10,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"A participant asks: What assumption te definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "privacy:10"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-012",
+    "split": "development",
+    "template_group": "development-missing_attribution-1",
+    "source_key": "privacy",
+    "source_segment_index": 13,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A participant asks: How would you explain the tradeoff in correction to a skeptical operator? Let me start wit",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-013",
+    "split": "development",
+    "template_group": "development-negation_removed_by_clipping-1",
+    "source_key": "privacy",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 33269
+      },
+      "source_segment_ids": [
+        "privacy:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-014",
+    "split": "development",
+    "template_group": "development-corrected_transcript-1",
+    "source_key": "privacy",
+    "source_segment_index": 19,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "Let us close by returning to the core proposition: A privacy review should reveal the data path and ",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:privacy:19"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-015",
+    "split": "development",
+    "template_group": "development-render_failure-1",
+    "source_key": "privacy",
+    "source_segment_index": 2,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: trace sample records and classify the actual contents. I wo",
+          "source_segment_ids": [
+            "privacy:2"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: trace sample records and classify the actual contents. I wo",
+          "source_segment_ids": [
+            "privacy:2"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: trace sample records and classify the actual contents. I wo",
+          "source_segment_ids": [
+            "privacy:2"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: trace sample records and classify the actual contents. I wo",
+          "source_segment_ids": [
+            "privacy:2"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: trace sample records and classify the actual contents. I wo",
+          "source_segment_ids": [
+            "privacy:2"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "privacy:2"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-016",
+    "split": "development",
+    "template_group": "development-duplicate_publishing-1",
+    "source_key": "privacy",
+    "source_segment_index": 5,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-1",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-017",
+    "split": "development",
+    "template_group": "development-altered_number-2",
+    "source_key": "onboarding",
+    "source_segment_index": 0,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 203 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "onboarding:0"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-018",
+    "split": "development",
+    "template_group": "development-unsupported_statistic-2",
+    "source_key": "energy",
+    "source_segment_index": 11,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "energy:11"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-019",
+    "split": "development",
+    "template_group": "development-quote_drift-2",
+    "source_key": "energy",
+    "source_segment_index": 14,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"Here is the practical move I would mak definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "energy:14"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-020",
+    "split": "development",
+    "template_group": "development-missing_attribution-2",
+    "source_key": "energy",
+    "source_segment_index": 17,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "Here is the practical move I would make: define the measurement window and explain confounding changes. I woul",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-021",
+    "split": "held_out",
+    "template_group": "held_out-negation_removed_by_clipping-2",
+    "source_key": "remote_work",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 47912
+      },
+      "source_segment_ids": [
+        "remote_work:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-022",
+    "split": "held_out",
+    "template_group": "held_out-corrected_transcript-2",
+    "source_key": "remote_work",
+    "source_segment_index": 3,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: pre-reading cannot ",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:remote_work:3"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-023",
+    "split": "held_out",
+    "template_group": "held_out-render_failure-2",
+    "source_key": "remote_work",
+    "source_segment_index": 6,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a written prompt sh",
+          "source_segment_ids": [
+            "remote_work:6"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a written prompt sh",
+          "source_segment_ids": [
+            "remote_work:6"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a written prompt sh",
+          "source_segment_ids": [
+            "remote_work:6"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a written prompt sh",
+          "source_segment_ids": [
+            "remote_work:6"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a written prompt sh",
+          "source_segment_ids": [
+            "remote_work:6"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "remote_work:6"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-024",
+    "split": "held_out",
+    "template_group": "held_out-duplicate_publishing-2",
+    "source_key": "remote_work",
+    "source_segment_index": 9,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-2",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-025",
+    "split": "held_out",
+    "template_group": "held_out-altered_number-3",
+    "source_key": "circular",
+    "source_segment_index": 13,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 233 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "circular:13"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-026",
+    "split": "held_out",
+    "template_group": "held_out-unsupported_statistic-3",
+    "source_key": "incident",
+    "source_segment_index": 15,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "incident:15"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-027",
+    "split": "held_out",
+    "template_group": "held_out-quote_drift-3",
+    "source_key": "incident",
+    "source_segment_index": 18,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"A follow-up question is what could mak definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "incident:18"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-028",
+    "split": "held_out",
+    "template_group": "held_out-missing_attribution-3",
+    "source_key": "incident",
+    "source_segment_index": 1,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A participant asks: What changed your view of first signal, and which observation is strongest? Let me start w",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-029",
+    "split": "held_out",
+    "template_group": "held_out-negation_removed_by_clipping-3",
+    "source_key": "incident",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 48257
+      },
+      "source_segment_ids": [
+        "incident:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-030",
+    "split": "held_out",
+    "template_group": "held_out-corrected_transcript-3",
+    "source_key": "incident",
+    "source_segment_index": 7,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A participant asks: What did the example teach you about timeline that a checklist would miss? Let m",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:incident:7"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-031",
+    "split": "held_out",
+    "template_group": "held_out-render_failure-3",
+    "source_key": "incident",
+    "source_segment_index": 10,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss communication? Let",
+          "source_segment_ids": [
+            "incident:10"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss communication? Let",
+          "source_segment_ids": [
+            "incident:10"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss communication? Let",
+          "source_segment_ids": [
+            "incident:10"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss communication? Let",
+          "source_segment_ids": [
+            "incident:10"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss communication? Let",
+          "source_segment_ids": [
+            "incident:10"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "incident:10"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-032",
+    "split": "held_out",
+    "template_group": "held_out-duplicate_publishing-3",
+    "source_key": "incident",
+    "source_segment_index": 13,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-3",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-033",
+    "split": "held_out",
+    "template_group": "held_out-altered_number-4",
+    "source_key": "data_quality",
+    "source_segment_index": 13,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 215 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "data_quality:13"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-034",
+    "split": "held_out",
+    "template_group": "held_out-unsupported_statistic-4",
+    "source_key": "circular",
+    "source_segment_index": 19,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "circular:19"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-035",
+    "split": "held_out",
+    "template_group": "held_out-quote_drift-4",
+    "source_key": "circular",
+    "source_segment_index": 2,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"Here is the practical move I would mak definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "circular:2"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-036",
+    "split": "held_out",
+    "template_group": "held_out-missing_attribution-4",
+    "source_key": "circular",
+    "source_segment_index": 5,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "Here is the practical move I would make: ask for evidence tied to the exact product. I would write that action",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-037",
+    "split": "held_out",
+    "template_group": "held_out-negation_removed_by_clipping-4",
+    "source_key": "circular",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 48211
+      },
+      "source_segment_ids": [
+        "circular:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-038",
+    "split": "held_out",
+    "template_group": "held_out-corrected_transcript-4",
+    "source_key": "circular",
+    "source_segment_index": 11,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "Here is the practical move I would make: name the receiving party and tracking record. I would write",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:circular:11"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-039",
+    "split": "held_out",
+    "template_group": "held_out-render_failure-4",
+    "source_key": "circular",
+    "source_segment_index": 14,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: correct the scope before approval. I would write that actio",
+          "source_segment_ids": [
+            "circular:14"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: correct the scope before approval. I would write that actio",
+          "source_segment_ids": [
+            "circular:14"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: correct the scope before approval. I would write that actio",
+          "source_segment_ids": [
+            "circular:14"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: correct the scope before approval. I would write that actio",
+          "source_segment_ids": [
+            "circular:14"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: correct the scope before approval. I would write that actio",
+          "source_segment_ids": [
+            "circular:14"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "circular:14"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-040",
+    "split": "held_out",
+    "template_group": "held_out-duplicate_publishing-4",
+    "source_key": "circular",
+    "source_segment_index": 17,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-4",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-041",
+    "split": "held_out",
+    "template_group": "held_out-altered_number-5",
+    "source_key": "circular",
+    "source_segment_index": 13,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 233 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "circular:13"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-042",
+    "split": "held_out",
+    "template_group": "held_out-unsupported_statistic-5",
+    "source_key": "maintenance",
+    "source_segment_index": 3,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "maintenance:3"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-043",
+    "split": "held_out",
+    "template_group": "held_out-quote_drift-5",
+    "source_key": "maintenance",
+    "source_segment_index": 6,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"A follow-up question is what could mak definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "maintenance:6"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-044",
+    "split": "held_out",
+    "template_group": "held_out-missing_attribution-5",
+    "source_key": "maintenance",
+    "source_segment_index": 9,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: not every warning justifies s",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-045",
+    "split": "held_out",
+    "template_group": "held_out-negation_removed_by_clipping-5",
+    "source_key": "maintenance",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 47901
+      },
+      "source_segment_ids": [
+        "maintenance:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-046",
+    "split": "held_out",
+    "template_group": "held_out-corrected_transcript-5",
+    "source_key": "maintenance",
+    "source_segment_index": 15,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: future impact needs",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:maintenance:15"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-047",
+    "split": "held_out",
+    "template_group": "held_out-render_failure-5",
+    "source_key": "maintenance",
+    "source_segment_index": 18,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a pilot result may ",
+          "source_segment_ids": [
+            "maintenance:18"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a pilot result may ",
+          "source_segment_ids": [
+            "maintenance:18"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a pilot result may ",
+          "source_segment_ids": [
+            "maintenance:18"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a pilot result may ",
+          "source_segment_ids": [
+            "maintenance:18"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: a pilot result may ",
+          "source_segment_ids": [
+            "maintenance:18"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "maintenance:18"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-048",
+    "split": "held_out",
+    "template_group": "held_out-duplicate_publishing-5",
+    "source_key": "maintenance",
+    "source_segment_index": 1,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-5",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-049",
+    "split": "held_out",
+    "template_group": "held_out-altered_number-6",
+    "source_key": "data_quality",
+    "source_segment_index": 13,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 215 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "data_quality:13"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-050",
+    "split": "held_out",
+    "template_group": "held_out-unsupported_statistic-6",
+    "source_key": "knowledge",
+    "source_segment_index": 7,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "knowledge:7"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-051",
+    "split": "held_out",
+    "template_group": "held_out-quote_drift-6",
+    "source_key": "knowledge",
+    "source_segment_index": 10,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"A participant asks: What assumption te definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "knowledge:10"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-052",
+    "split": "held_out",
+    "template_group": "held_out-missing_attribution-6",
+    "source_key": "knowledge",
+    "source_segment_index": 13,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A participant asks: How would you explain the tradeoff in correction to a skeptical operator? Let me start wit",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-053",
+    "split": "held_out",
+    "template_group": "held_out-negation_removed_by_clipping-6",
+    "source_key": "knowledge",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 47579
+      },
+      "source_segment_ids": [
+        "knowledge:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-054",
+    "split": "held_out",
+    "template_group": "held_out-corrected_transcript-6",
+    "source_key": "knowledge",
+    "source_segment_index": 19,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "Let us close by returning to the core proposition: Search quality depends on ownership and source fr",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:knowledge:19"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-055",
+    "split": "held_out",
+    "template_group": "held_out-render_failure-6",
+    "source_key": "knowledge",
+    "source_segment_index": 2,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: identify the authoritative owner and effective date. I woul",
+          "source_segment_ids": [
+            "knowledge:2"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: identify the authoritative owner and effective date. I woul",
+          "source_segment_ids": [
+            "knowledge:2"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: identify the authoritative owner and effective date. I woul",
+          "source_segment_ids": [
+            "knowledge:2"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: identify the authoritative owner and effective date. I woul",
+          "source_segment_ids": [
+            "knowledge:2"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: identify the authoritative owner and effective date. I woul",
+          "source_segment_ids": [
+            "knowledge:2"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "knowledge:2"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-056",
+    "split": "held_out",
+    "template_group": "held_out-duplicate_publishing-6",
+    "source_key": "knowledge",
+    "source_segment_index": 5,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-6",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-057",
+    "split": "held_out",
+    "template_group": "held_out-altered_number-7",
+    "source_key": "circular",
+    "source_segment_index": 13,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 233 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "circular:13"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-058",
+    "split": "held_out",
+    "template_group": "held_out-unsupported_statistic-7",
+    "source_key": "clinic",
+    "source_segment_index": 11,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "clinic:11"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-059",
+    "split": "held_out",
+    "template_group": "held_out-quote_drift-7",
+    "source_key": "clinic",
+    "source_segment_index": 14,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"Here is the practical move I would mak definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "clinic:14"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-060",
+    "split": "held_out",
+    "template_group": "held_out-missing_attribution-7",
+    "source_key": "clinic",
+    "source_segment_index": 17,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "Here is the practical move I would make: require review against the original record. I would write that action",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-061",
+    "split": "held_out",
+    "template_group": "held_out-negation_removed_by_clipping-7",
+    "source_key": "clinic",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 48920
+      },
+      "source_segment_ids": [
+        "clinic:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-062",
+    "split": "held_out",
+    "template_group": "held_out-corrected_transcript-7",
+    "source_key": "clinic",
+    "source_segment_index": 3,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: a form cannot repla",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:clinic:3"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-063",
+    "split": "held_out",
+    "template_group": "held_out-render_failure-7",
+    "source_key": "clinic",
+    "source_segment_index": 6,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: software must not i",
+          "source_segment_ids": [
+            "clinic:6"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: software must not i",
+          "source_segment_ids": [
+            "clinic:6"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: software must not i",
+          "source_segment_ids": [
+            "clinic:6"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: software must not i",
+          "source_segment_ids": [
+            "clinic:6"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A follow-up question is what could make this recommendation wrong. My answer is: software must not i",
+          "source_segment_ids": [
+            "clinic:6"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "clinic:6"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-064",
+    "split": "held_out",
+    "template_group": "held_out-duplicate_publishing-7",
+    "source_key": "clinic",
+    "source_segment_index": 9,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-7",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-065",
+    "split": "held_out",
+    "template_group": "held_out-altered_number-8",
+    "source_key": "data_quality",
+    "source_segment_index": 13,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 215 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "data_quality:13"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-066",
+    "split": "held_out",
+    "template_group": "held_out-unsupported_statistic-8",
+    "source_key": "accessibility",
+    "source_segment_index": 15,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "accessibility:15"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-067",
+    "split": "held_out",
+    "template_group": "held_out-quote_drift-8",
+    "source_key": "accessibility",
+    "source_segment_index": 18,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"A follow-up question is what could mak definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "accessibility:18"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-068",
+    "split": "held_out",
+    "template_group": "held_out-missing_attribution-8",
+    "source_key": "accessibility",
+    "source_segment_index": 1,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A participant asks: What changed your view of task selection, and which observation is strongest? Let me start",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-069",
+    "split": "held_out",
+    "template_group": "held_out-negation_removed_by_clipping-8",
+    "source_key": "accessibility",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 48325
+      },
+      "source_segment_ids": [
+        "accessibility:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-070",
+    "split": "held_out",
+    "template_group": "held_out-corrected_transcript-8",
+    "source_key": "accessibility",
+    "source_segment_index": 7,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A participant asks: What did the example teach you about focus that a checklist would miss? Let me s",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:accessibility:7"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-071",
+    "split": "held_out",
+    "template_group": "held_out-render_failure-8",
+    "source_key": "accessibility",
+    "source_segment_index": 10,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss error recovery? Le",
+          "source_segment_ids": [
+            "accessibility:10"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss error recovery? Le",
+          "source_segment_ids": [
+            "accessibility:10"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss error recovery? Le",
+          "source_segment_ids": [
+            "accessibility:10"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss error recovery? Le",
+          "source_segment_ids": [
+            "accessibility:10"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "A participant asks: What assumption tends to survive too long when people discuss error recovery? Le",
+          "source_segment_ids": [
+            "accessibility:10"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "accessibility:10"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-072",
+    "split": "held_out",
+    "template_group": "held_out-duplicate_publishing-8",
+    "source_key": "accessibility",
+    "source_segment_index": 13,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-8",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-073",
+    "split": "held_out",
+    "template_group": "held_out-altered_number-9",
+    "source_key": "circular",
+    "source_segment_index": 13,
+    "defect_type": "altered_number",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "The scenario recorded 233 items.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "circular:13"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-074",
+    "split": "held_out",
+    "template_group": "held_out-unsupported_statistic-9",
+    "source_key": "data_quality",
+    "source_segment_index": 19,
+    "defect_type": "unsupported_statistic",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "A claimed 73% of teams prefer this approach.",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "data_quality:19"
+      ]
+    },
+    "expected_warning": "Number lacks cited transcript evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-075",
+    "split": "held_out",
+    "template_group": "held_out-quote_drift-9",
+    "source_key": "data_quality",
+    "source_segment_index": 2,
+    "defect_type": "quote_drift",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "\"Here is the practical move I would mak definitely\"",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "data_quality:2"
+      ]
+    },
+    "expected_warning": "Quote not found verbatim",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-076",
+    "split": "held_out",
+    "template_group": "held_out-missing_attribution-9",
+    "source_key": "data_quality",
+    "source_segment_index": 5,
+    "defect_type": "missing_attribution",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "Here is the practical move I would make: separate not-applicable from unknown. I would write that action where",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": []
+    },
+    "expected_warning": "Missing source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-077",
+    "split": "held_out",
+    "template_group": "held_out-negation_removed_by_clipping-9",
+    "source_key": "data_quality",
+    "source_segment_index": 0,
+    "defect_type": "negation_removed_by_clipping",
+    "candidate": {
+      "asset_type": "clip",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [],
+      "clip_range": {
+        "start_ms": 700,
+        "end_ms": 49523
+      },
+      "source_segment_ids": [
+        "data_quality:0"
+      ]
+    },
+    "expected_warning": "Clip cuts through a cited transcript segment",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-078",
+    "split": "held_out",
+    "template_group": "held_out-corrected_transcript-9",
+    "source_key": "data_quality",
+    "source_segment_index": 11,
+    "defect_type": "corrected_transcript",
+    "candidate": {
+      "asset_type": "social",
+      "title": "Fixture validation candidate",
+      "text": "Here is the practical move I would make: show source freshness and alert the owner. I would write th",
+      "slides": [],
+      "clip_range": null,
+      "source_segment_ids": [
+        "replaced:data_quality:11"
+      ]
+    },
+    "expected_warning": "Unknown source segment evidence",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-079",
+    "split": "held_out",
+    "template_group": "held_out-render_failure-9",
+    "source_key": "data_quality",
+    "source_segment_index": 14,
+    "defect_type": "render_failure",
+    "candidate": {
+      "asset_type": "carousel",
+      "title": "Fixture validation candidate",
+      "text": "",
+      "slides": [
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: replace the count with a traced correction. I would write t",
+          "source_segment_ids": [
+            "data_quality:14"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: replace the count with a traced correction. I would write t",
+          "source_segment_ids": [
+            "data_quality:14"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: replace the count with a traced correction. I would write t",
+          "source_segment_ids": [
+            "data_quality:14"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: replace the count with a traced correction. I would write t",
+          "source_segment_ids": [
+            "data_quality:14"
+          ]
+        },
+        {
+          "heading": "A source note",
+          "body": "Here is the practical move I would make: replace the count with a traced correction. I would write t",
+          "source_segment_ids": [
+            "data_quality:14"
+          ]
+        }
+      ],
+      "clip_range": null,
+      "source_segment_ids": [
+        "data_quality:14"
+      ]
+    },
+    "expected_warning": "Carousel requires 6",
+    "reference_date": "2026-09-01"
+  },
+  {
+    "case_id": "case-080",
+    "split": "held_out",
+    "template_group": "held_out-duplicate_publishing-9",
+    "source_key": "data_quality",
+    "source_segment_index": 17,
+    "defect_type": "duplicate_publishing",
+    "candidate": {
+      "operation_key": "synthetic-dispatch-9",
+      "attempts": 2,
+      "expected_draft_count": 1
+    },
+    "expected_warning": "integration_only",
+    "reference_date": "2026-09-01"
+  }
+]

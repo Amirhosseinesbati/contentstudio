@@ -1,0 +1,210 @@
+{
+  "id": "contentstudio_intake_v1",
+  "name": "ContentStudio / Intake owned source",
+  "nodes": [
+    {
+      "id": "ee552ab4-ce7d-59a2-b994-bcf1f769a391",
+      "name": "Intake boundary",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -20
+      ],
+      "parameters": {
+        "content": "## Authenticated event\nThe portal posts a source ID, never media bytes. Header Auth checks X-Service-Token. The API validates schema, rights, hash, recipe and creates a durable batch. 202 is sent immediately.",
+        "height": 180,
+        "width": 620
+      }
+    },
+    {
+      "id": "9c7784c0-737c-548d-9506-7c3fd02ce1bf",
+      "name": "Receive intake event",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        40,
+        220
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contentstudio/intake",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {
+          "noResponseBody": true,
+          "responseCode": {
+            "values": {
+              "responseCode": "customCode",
+              "customCode": 202
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      },
+      "webhookId": "df335918-a6f6-5b4f-8197-5fddc5c7df16"
+    },
+    {
+      "id": "54742a80-4581-5319-a110-57974528d456",
+      "name": "Claim source and batch",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/intake",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "0cdce528-ad22-50dd-8c8a-e96bb1112a35",
+      "name": "Attach workspace to batch",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{json: {...$input.first().json, workspace_id: $('Receive intake event').first().json.body.workspace_id}}];"
+      }
+    },
+    {
+      "id": "2f999de9-438e-580a-86f1-09c218b70c87",
+      "name": "Already processed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        220
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "127c124b-a112-5e93-9cf1-5b8cac10d8c2",
+              "leftValue": "={{ $json.duplicate === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "108300c8-341a-5fd4-9c08-1a5e19ba14ae",
+      "name": "Transcribe and generate",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1160,
+        360
+      ],
+      "parameters": {
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "__workflow:transcribe_generate__",
+          "mode": "id"
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Receive intake event": {
+      "main": [
+        [
+          {
+            "node": "Claim source and batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim source and batch": {
+      "main": [
+        [
+          {
+            "node": "Attach workspace to batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach workspace to batch": {
+      "main": [
+        [
+          {
+            "node": "Already processed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already processed?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Transcribe and generate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": false,
+    "errorWorkflow": "__workflow:error_handler__"
+  },
+  "active": false,
+  "pinData": {}
+}

@@ -1,0 +1,195 @@
+{
+  "generated_at_utc": "2026-09-28T08:34:39.492715+00:00",
+  "environment": "local-demo",
+  "simulated_external_systems": true,
+  "workflow_version": "2.40.7",
+  "run_id": "20260928T083343b793bd",
+  "triggered_events": [
+    {
+      "scenario": "intake-1",
+      "webhook_status": 202,
+      "execution_id": "23",
+      "batch_id": "5f647252-854f-400c-bcaa-dcf50805d467",
+      "asset_count": 11,
+      "claim_count": 1,
+      "asset_type_counts": {
+        "article": 1,
+        "carousel": 1,
+        "clip": 3,
+        "newsletter": 1,
+        "social": 5
+      },
+      "persisted_status": "review"
+    },
+    {
+      "scenario": "intake-2",
+      "webhook_status": 202,
+      "execution_id": "25",
+      "batch_id": "33b97b2d-2250-4936-8bdd-1cba512deba3",
+      "asset_count": 11,
+      "claim_count": 5,
+      "asset_type_counts": {
+        "article": 1,
+        "carousel": 1,
+        "clip": 3,
+        "newsletter": 1,
+        "social": 5
+      },
+      "persisted_status": "review"
+    },
+    {
+      "scenario": "intake-3",
+      "webhook_status": 202,
+      "execution_id": "27",
+      "batch_id": "6abdf354-06cf-4642-8777-185189683b72",
+      "asset_count": 11,
+      "claim_count": 1,
+      "asset_type_counts": {
+        "article": 1,
+        "carousel": 1,
+        "clip": 3,
+        "newsletter": 1,
+        "social": 5
+      },
+      "persisted_status": "review"
+    },
+    {
+      "scenario": "intake-4",
+      "webhook_status": 202,
+      "execution_id": "29",
+      "batch_id": "b0c55369-4c15-46da-adf0-f273cf6a4af2",
+      "asset_count": 11,
+      "claim_count": 5,
+      "asset_type_counts": {
+        "article": 1,
+        "carousel": 1,
+        "clip": 3,
+        "newsletter": 1,
+        "social": 5
+      },
+      "persisted_status": "review"
+    },
+    {
+      "scenario": "intake-5",
+      "webhook_status": 202,
+      "execution_id": "31",
+      "batch_id": "854f2a03-cfa2-4012-a2f2-1f8e4ad00a9c",
+      "asset_count": 11,
+      "claim_count": 1,
+      "asset_type_counts": {
+        "article": 1,
+        "carousel": 1,
+        "clip": 3,
+        "newsletter": 1,
+        "social": 5
+      },
+      "persisted_status": "review"
+    },
+    {
+      "scenario": "same-event-duplicate",
+      "webhook_status": 202,
+      "execution_id": "33",
+      "batch_id": "5f647252-854f-400c-bcaa-dcf50805d467",
+      "duplicate_preserved_batch": true
+    },
+    {
+      "scenario": "conflicting-event-id",
+      "webhook_status": 202,
+      "execution_id": "34",
+      "error_workflow_execution_id": "35",
+      "rejected_without_state_change": true
+    },
+    {
+      "scenario": "malformed-event-error-trigger",
+      "webhook_status": 202,
+      "execution_id": "36",
+      "error_workflow_execution_id": "37",
+      "rejected_without_state_change": true
+    }
+  ],
+  "intake_executions": [
+    {
+      "id": "23",
+      "workflowId": "gTKJGLWGJV6vhlKm",
+      "status": "success",
+      "startedAt": "2026-09-28T08:33:45.634Z",
+      "stoppedAt": "2026-09-28T08:33:45.999Z",
+      "mode": "webhook"
+    },
+    {
+      "id": "25",
+      "workflowId": "gTKJGLWGJV6vhlKm",
+      "status": "success",
+      "startedAt": "2026-09-28T08:33:51.852Z",
+      "stoppedAt": "2026-09-28T08:33:52.231Z",
+      "mode": "webhook"
+    },
+    {
+      "id": "27",
+      "workflowId": "gTKJGLWGJV6vhlKm",
+      "status": "success",
+      "startedAt": "2026-09-28T08:33:58.082Z",
+      "stoppedAt": "2026-09-28T08:33:58.557Z",
+      "mode": "webhook"
+    },
+    {
+      "id": "29",
+      "workflowId": "gTKJGLWGJV6vhlKm",
+      "status": "success",
+      "startedAt": "2026-09-28T08:34:04.293Z",
+      "stoppedAt": "2026-09-28T08:34:04.892Z",
+      "mode": "webhook"
+    },
+    {
+      "id": "31",
+      "workflowId": "gTKJGLWGJV6vhlKm",
+      "status": "success",
+      "startedAt": "2026-09-28T08:34:10.527Z",
+      "stoppedAt": "2026-09-28T08:34:10.877Z",
+      "mode": "webhook"
+    },
+    {
+      "id": "33",
+      "workflowId": "gTKJGLWGJV6vhlKm",
+      "status": "success",
+      "startedAt": "2026-09-28T08:34:18.768Z",
+      "stoppedAt": "2026-09-28T08:34:18.896Z",
+      "mode": "webhook"
+    },
+    {
+      "id": "34",
+      "workflowId": "gTKJGLWGJV6vhlKm",
+      "status": "error",
+      "startedAt": "2026-09-28T08:34:24.991Z",
+      "stoppedAt": "2026-09-28T08:34:25.171Z",
+      "mode": "webhook"
+    },
+    {
+      "id": "36",
+      "workflowId": "gTKJGLWGJV6vhlKm",
+      "status": "error",
+      "startedAt": "2026-09-28T08:34:33.295Z",
+      "stoppedAt": "2026-09-28T08:34:33.495Z",
+      "mode": "webhook"
+    }
+  ],
+  "error_handler_executions": [
+    {
+      "id": "35",
+      "workflowId": "Z7lfYlAiqrYfmVIz",
+      "status": "success",
+      "startedAt": "2026-09-28T08:34:25.233Z",
+      "stoppedAt": "2026-09-28T08:34:25.332Z",
+      "mode": "error"
+    },
+    {
+      "id": "37",
+      "workflowId": "Z7lfYlAiqrYfmVIz",
+      "status": "success",
+      "startedAt": "2026-09-28T08:34:33.532Z",
+      "stoppedAt": "2026-09-28T08:34:33.577Z",
+      "mode": "error"
+    }
+  ],
+  "payloads_and_secrets_saved": false
+}

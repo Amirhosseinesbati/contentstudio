@@ -1,0 +1,85 @@
+{
+  "id": "contentstudio_error_handler_v1",
+  "name": "ContentStudio / Shared execution error",
+  "nodes": [
+    {
+      "id": "4631c78f-f804-5c75-a250-c987249cd7aa",
+      "name": "Error policy",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -20
+      ],
+      "parameters": {
+        "content": "## System incident\nOnly workflow/node identifiers are forwarded. Raw stack traces and payloads stay out of the business exception queue.",
+        "height": 180,
+        "width": 440
+      }
+    },
+    {
+      "id": "938ba506-2bae-5dc8-b6a7-444074985032",
+      "name": "Catch production failure",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        40,
+        220
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "7c7ade43-1048-56d6-9285-bc76a183e863",
+      "name": "Record system incident",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/errors",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: null, operation_key: 'n8n:' + ($json.workflow?.id || 'unknown') + ':' + ($json.execution?.id || $json.trigger?.error?.timestamp || 'unknown'), error: 'n8n execution failed at ' + ($json.execution?.lastNodeExecuted || 'trigger'), outcome: 'failed'}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Catch production failure": {
+      "main": [
+        [
+          {
+            "node": "Record system incident",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": false
+  },
+  "active": false,
+  "pinData": {}
+}

@@ -1,0 +1,121 @@
+name: contentstudio
+
+services:
+  postgres:
+    image: postgres:16.15-bookworm
+    environment:
+      POSTGRES_USER: contentstudio
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: contentstudio
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contentstudio -d contentstudio"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      MODE: ${MODE:-demo}
+      DATABASE_URL: postgresql+psycopg://contentstudio:${POSTGRES_PASSWORD}@postgres:5432/contentstudio
+      MEDIA_ROOT: /data/media
+      FIXTURES_ROOT: /app/fixtures
+      MODEL_PROVIDER: ${MODEL_PROVIDER:-fixture}
+      MODEL_ID: ${MODEL_ID:-}
+      TRANSCRIPTION_PROVIDER: ${TRANSCRIPTION_PROVIDER:-fixture}
+      TRANSCRIPTION_MODEL: ${TRANSCRIPTION_MODEL:-whisper-1}
+      SERVICE_TOKEN: ${SERVICE_TOKEN:?Set SERVICE_TOKEN in .env}
+      N8N_INTAKE_WEBHOOK: http://n8n:5678/webhook/contentstudio/intake
+      N8N_HEALTH_URL: http://n8n:5678/healthz
+      N8N_API_KEY: ${N8N_API_KEY:-}
+      WORDPRESS_BASE_URL: ${WORDPRESS_BASE_URL:-http://connector-sim:8081}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-DemoStudio!2026}
+      DEMO_REFERENCE_DATE: ${DEMO_REFERENCE_DATE:-2026-09-28}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    volumes:
+      - media_data:/data/media
+    ports:
+      - "127.0.0.1:${API_HOST_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:4173:8080"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:2.40.7
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_PORT: "5432"
+      DB_POSTGRESDB_DATABASE: n8n
+      DB_POSTGRESDB_USER: contentstudio
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?Set N8N_ENCRYPTION_KEY in .env}
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: "5678"
+      N8N_PROTOCOL: ${N8N_PROTOCOL:-http}
+      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://localhost:5678/}
+      N8N_SECURE_COOKIE: ${N8N_SECURE_COOKIE:-false}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_COMMUNITY_PACKAGES_ENABLED: "false"
+      N8N_RUNNERS_MODE: internal
+      EXECUTIONS_DATA_SAVE_ON_SUCCESS: ${N8N_SAVE_SUCCESS_EXECUTIONS:-none}
+      EXECUTIONS_DATA_SAVE_ON_ERROR: all
+      EXECUTIONS_DATA_PRUNE: "true"
+      EXECUTIONS_DATA_MAX_AGE: ${N8N_EXECUTION_MAX_AGE_HOURS:-24}
+      EXECUTIONS_DATA_PRUNE_MAX_COUNT: ${N8N_EXECUTION_MAX_COUNT:-1000}
+      GENERIC_TIMEZONE: Asia/Tehran
+    volumes:
+      - n8n_data:/home/node/.n8n
+    ports:
+      - "127.0.0.1:${N8N_HOST_PORT:-5678}:5678"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  connector-sim:
+    build:
+      context: ./infra/connector_sim
+      dockerfile: Dockerfile
+    environment:
+      SIM_DATA_PATH: /data/simulator.json
+      SIM_WORDPRESS_USER: ${SIM_WORDPRESS_USER:-demo}
+      SIM_WORDPRESS_PASSWORD: ${SIM_WORDPRESS_PASSWORD:?Set SIM_WORDPRESS_PASSWORD in .env}
+      SIM_CONTROL_TOKEN: ${SIM_CONTROL_TOKEN:?Set SIM_CONTROL_TOKEN in .env}
+    volumes:
+      - connector_data:/data
+    ports:
+      - "127.0.0.1:${SIM_HOST_PORT:-8081}:8081"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  media_data:
+  n8n_data:
+  connector_data:

@@ -1,0 +1,413 @@
+{
+  "pack": "ContentStudio",
+  "version": 1,
+  "n8n_version": "2.40.7",
+  "workflows": [
+    {
+      "key": "error_handler",
+      "name": "ContentStudio / Shared execution error",
+      "logical_id": "contentstudio_error_handler_v1",
+      "file": "01-error-handler.json",
+      "dependencies": [],
+      "credentials": [
+        "httpHeaderAuth"
+      ],
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workflow": {
+            "type": "object"
+          },
+          "execution": {
+            "type": "object"
+          },
+          "trigger": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "workflow"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "recorded": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "recorded"
+        ],
+        "additionalProperties": false
+      },
+      "import_order": 1,
+      "activate_for_demo": true
+    },
+    {
+      "key": "transcribe_generate",
+      "name": "ContentStudio / Transcribe and draft bundle",
+      "logical_id": "contentstudio_transcribe_generate_v1",
+      "file": "02-transcribe-generate.json",
+      "dependencies": [
+        "error_handler"
+      ],
+      "credentials": [
+        "httpHeaderAuth"
+      ],
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "batch_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "workspace_id",
+          "batch_id"
+        ],
+        "additionalProperties": true
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "batch": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "status"
+            ],
+            "additionalProperties": true
+          },
+          "source": {
+            "type": "object"
+          },
+          "claims": {
+            "type": "array"
+          },
+          "assets": {
+            "type": "array"
+          }
+        },
+        "required": [
+          "batch",
+          "source",
+          "claims",
+          "assets"
+        ],
+        "additionalProperties": true
+      },
+      "import_order": 2,
+      "activate_for_demo": true
+    },
+    {
+      "key": "render_item",
+      "name": "ContentStudio / Render approved asset",
+      "logical_id": "contentstudio_render_item_v1",
+      "file": "03-render-item.json",
+      "dependencies": [
+        "error_handler"
+      ],
+      "credentials": [
+        "httpHeaderAuth"
+      ],
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "asset_version_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "workspace_id",
+          "asset_version_id"
+        ],
+        "additionalProperties": true
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "render_urls": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "job_id",
+          "status"
+        ],
+        "additionalProperties": false
+      },
+      "import_order": 3,
+      "activate_for_demo": true
+    },
+    {
+      "key": "dispatch_draft",
+      "name": "ContentStudio / Dispatch WordPress draft",
+      "logical_id": "contentstudio_dispatch_draft_v1",
+      "file": "04-dispatch-draft.json",
+      "dependencies": [
+        "error_handler"
+      ],
+      "credentials": [
+        "httpBasicAuth",
+        "httpHeaderAuth"
+      ],
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "asset_version_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channel": {
+            "const": "wordpress"
+          },
+          "operation_key": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "workspace_id",
+          "asset_version_id",
+          "channel",
+          "operation_key"
+        ],
+        "additionalProperties": true
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "const": "complete"
+          },
+          "duplicate": {
+            "type": "boolean"
+          },
+          "external_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "external_id"
+        ],
+        "additionalProperties": true
+      },
+      "import_order": 4,
+      "activate_for_demo": true
+    },
+    {
+      "key": "intake",
+      "name": "ContentStudio / Intake owned source",
+      "logical_id": "contentstudio_intake_v1",
+      "file": "05-intake.json",
+      "dependencies": [
+        "error_handler",
+        "transcribe_generate"
+      ],
+      "credentials": [
+        "httpHeaderAuth"
+      ],
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_asset_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "recipe_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "brand_profile_version_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "workspace_id",
+          "source_asset_id",
+          "recipe_version",
+          "brand_profile_version_id",
+          "request_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "http_status": {
+            "const": 202
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "import_order": 5,
+      "activate_for_demo": true
+    },
+    {
+      "key": "due_items",
+      "name": "ContentStudio / Process due editorial actions",
+      "logical_id": "contentstudio_due_items_v1",
+      "file": "06-due-items.json",
+      "dependencies": [
+        "error_handler",
+        "render_item",
+        "dispatch_draft"
+      ],
+      "credentials": [
+        "httpHeaderAuth"
+      ],
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": true
+      },
+      "output_schema": {
+        "description": "Per processed action: render, package, WordPress draft or local outbox result; zero items when no work is due",
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "job_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "status"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "status": {
+                "const": "complete"
+              },
+              "external_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "external_id"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ready": {
+                "const": true
+              },
+              "duplicate": {
+                "type": "boolean"
+              },
+              "operation_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "draft_id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "required": [
+              "ready",
+              "duplicate",
+              "operation_key",
+              "draft_id"
+            ],
+            "additionalProperties": true
+          }
+        ]
+      },
+      "import_order": 6,
+      "activate_for_demo": true
+    },
+    {
+      "key": "reconcile",
+      "name": "ContentStudio / Reconcile uncertain drafts",
+      "logical_id": "contentstudio_reconcile_v1",
+      "file": "07-reconcile.json",
+      "dependencies": [
+        "error_handler"
+      ],
+      "credentials": [
+        "httpBasicAuth",
+        "httpHeaderAuth"
+      ],
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": true
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "const": "complete"
+          },
+          "external_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "external_id"
+        ],
+        "additionalProperties": true
+      },
+      "import_order": 7,
+      "activate_for_demo": true
+    }
+  ]
+}

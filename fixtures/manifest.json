@@ -1,0 +1,98 @@
+{
+  "label": "Synthetic demo dataset",
+  "seed": 4209,
+  "reference_date": "2026-09-01",
+  "counts": {
+    "transcripts": 12,
+    "brands": 4,
+    "asset_versions": 120,
+    "validation_development": 20,
+    "validation_held_out": 60
+  },
+  "transcripts": [
+    {
+      "source_key": "onboarding",
+      "words": 2797,
+      "duration_ms_estimate": 600000,
+      "duration_kind": "measured_media",
+      "sha256": "eb45c325ba131d4674dadf336512a68f210394a22fbd141f2077d927f81462bc"
+    },
+    {
+      "source_key": "privacy",
+      "words": 2771,
+      "duration_ms_estimate": 592080,
+      "duration_kind": "measured_media",
+      "sha256": "7c533f7206cd69d2b6490737ecce871ffa6ef443aaca787b150458a02bf0058e"
+    },
+    {
+      "source_key": "energy",
+      "words": 2763,
+      "duration_ms_estimate": 550250,
+      "duration_kind": "measured_media",
+      "sha256": "05135dfb8a14817d08c6e20d13ca66bd2dc7389871a2bb8718fe6c27e56e7687"
+    },
+    {
+      "source_key": "supply",
+      "words": 2752,
+      "duration_ms_estimate": 934918,
+      "duration_kind": "script_estimate",
+      "sha256": "0cb1d1cf8ee0ef5f398cb7232b8b67f0604f5eedea481c91b366f8231c5cb5b3"
+    },
+    {
+      "source_key": "accessibility",
+      "words": 2753,
+      "duration_ms_estimate": 935577,
+      "duration_kind": "script_estimate",
+      "sha256": "ce100e94fe698e48f866d697592e4e32730ac9f1a99195ee9cb3ff2d50b2f38e"
+    },
+    {
+      "source_key": "data_quality",
+      "words": 2746,
+      "duration_ms_estimate": 932776,
+      "duration_kind": "script_estimate",
+      "sha256": "75782228ee1dfdbf0fb5e5406a633b3ca0348c681043bf5cc1b717b32415e442"
+    },
+    {
+      "source_key": "remote_work",
+      "words": 2750,
+      "duration_ms_estimate": 934098,
+      "duration_kind": "script_estimate",
+      "sha256": "27d40a153a3410b69f469fd564b8c9604eb0836251fe476fc2ba91e2361fe26b"
+    },
+    {
+      "source_key": "incident",
+      "words": 2745,
+      "duration_ms_estimate": 932706,
+      "duration_kind": "script_estimate",
+      "sha256": "691ca95879b57970199160c0e70662b4e18008d0433df3c2d5143fc50f32e417"
+    },
+    {
+      "source_key": "circular",
+      "words": 2727,
+      "duration_ms_estimate": 926452,
+      "duration_kind": "script_estimate",
+      "sha256": "c514f62515ea070b8cf887c8e63603c7d690e129e5a833d742c9172aa9410d8d"
+    },
+    {
+      "source_key": "maintenance",
+      "words": 2731,
+      "duration_ms_estimate": 927678,
+      "duration_kind": "script_estimate",
+      "sha256": "cb43b96f1a475be5863042d25f5d054d9dcd958b4f3f81a22e0feaf8961ea89b"
+    },
+    {
+      "source_key": "knowledge",
+      "words": 2732,
+      "duration_ms_estimate": 927850,
+      "duration_kind": "script_estimate",
+      "sha256": "cfd5bf747d215962e9240e8f4fbaf796071dd902b6beb8610698d3007422df97"
+    },
+    {
+      "source_key": "clinic",
+      "words": 2748,
+      "duration_ms_estimate": 933186,
+      "duration_kind": "script_estimate",
+      "sha256": "1edbc7562e67c004888cb9134a33e04cc6b52741d100985685ef9fc13c4c13b9"
+    }
+  ]
+}

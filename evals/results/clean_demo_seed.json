@@ -1,0 +1,35 @@
+{
+  "label": "Clean synthetic demo seed smoke",
+  "date": "2026-09-28",
+  "environment": "Windows local; isolated empty SQLite database and media directory",
+  "command": "alembic upgrade head; python -m contentstudio.seed",
+  "command_wall_seconds": 15.792,
+  "workspaces": 2,
+  "sources": 12,
+  "showcase_assets": 11,
+  "showcase_batch_status": "complete",
+  "synthetic_demo_dataset": true,
+  "review_note": "Showcase approvals were generated as explicitly synthetic demo decisions; they do not represent human editorial review.",
+  "rendered_media": {
+    "carousel_pngs": 7,
+    "carousel_pdfs": 1,
+    "clips_mp4": 3,
+    "subtitle_srts": 3
+  },
+  "package": {
+    "file_count": 23,
+    "mp4_count": 3,
+    "pdf_count": 1,
+    "zip_integrity": "ZipFile.testzip() returned null",
+    "safe_output_pattern": "pkg-<lease UUID>.zip"
+  },
+  "post_fix_recheck": {
+    "date": "2026-09-28",
+    "action": "Reran the seed against the existing isolated demo database after lease-specific ZIP naming was implemented",
+    "command_wall_seconds": 2.785,
+    "zip_members": 23,
+    "zip_integrity": "ZipFile.testzip() returned null",
+    "package_filename_contains_completed_job_lease": true
+  },
+  "limits": "No Docker/n8n triggered workflow, PostgreSQL restore, connected provider call, human review, audible media review, CPU peak, or customer outcome was measured by this smoke."
+}

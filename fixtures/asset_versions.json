@@ -1,0 +1,1442 @@
+[
+  {
+    "fixture_id": "asset-version-001",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "article",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      0
+    ],
+    "text": "Synthetic article draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-002",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      1
+    ],
+    "text": "Synthetic newsletter draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-003",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "social",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      2
+    ],
+    "text": "Synthetic social draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-004",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      3
+    ],
+    "text": "Synthetic carousel draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-005",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      4
+    ],
+    "text": "Synthetic clip draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-006",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "article",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      5
+    ],
+    "text": "Synthetic article draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-007",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      6
+    ],
+    "text": "Synthetic newsletter draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-008",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "social",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      7
+    ],
+    "text": "Synthetic social draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-009",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      8
+    ],
+    "text": "Synthetic carousel draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-010",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      9
+    ],
+    "text": "Synthetic clip draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-011",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "article",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      10
+    ],
+    "text": "Synthetic article draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-012",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      11
+    ],
+    "text": "Synthetic newsletter draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-013",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "social",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      12
+    ],
+    "text": "Synthetic social draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-014",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      13
+    ],
+    "text": "Synthetic carousel draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-015",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      14
+    ],
+    "text": "Synthetic clip draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-016",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "article",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      15
+    ],
+    "text": "Synthetic article draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-017",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      16
+    ],
+    "text": "Synthetic newsletter draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-018",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "social",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      17
+    ],
+    "text": "Synthetic social draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-019",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      18
+    ],
+    "text": "Synthetic carousel draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-020",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      19
+    ],
+    "text": "Synthetic clip draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-021",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "article",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      0
+    ],
+    "text": "Synthetic article draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-022",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      1
+    ],
+    "text": "Synthetic newsletter draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-023",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "social",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      2
+    ],
+    "text": "Synthetic social draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-024",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      3
+    ],
+    "text": "Synthetic carousel draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-025",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      4
+    ],
+    "text": "Synthetic clip draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-026",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "article",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      5
+    ],
+    "text": "Synthetic article draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-027",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      6
+    ],
+    "text": "Synthetic newsletter draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-028",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "social",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      7
+    ],
+    "text": "Synthetic social draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-029",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      8
+    ],
+    "text": "Synthetic carousel draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-030",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      9
+    ],
+    "text": "Synthetic clip draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-031",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "article",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      10
+    ],
+    "text": "Synthetic article draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-032",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      11
+    ],
+    "text": "Synthetic newsletter draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-033",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "social",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      12
+    ],
+    "text": "Synthetic social draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-034",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      13
+    ],
+    "text": "Synthetic carousel draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-035",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      14
+    ],
+    "text": "Synthetic clip draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-036",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "article",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      15
+    ],
+    "text": "Synthetic article draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-037",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      16
+    ],
+    "text": "Synthetic newsletter draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-038",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "social",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      17
+    ],
+    "text": "Synthetic social draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-039",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      18
+    ],
+    "text": "Synthetic carousel draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-040",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      19
+    ],
+    "text": "Synthetic clip draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-041",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "article",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      0
+    ],
+    "text": "Synthetic article draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-042",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      1
+    ],
+    "text": "Synthetic newsletter draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-043",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "social",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      2
+    ],
+    "text": "Synthetic social draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-044",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      3
+    ],
+    "text": "Synthetic carousel draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-045",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      4
+    ],
+    "text": "Synthetic clip draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-046",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "article",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      5
+    ],
+    "text": "Synthetic article draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-047",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      6
+    ],
+    "text": "Synthetic newsletter draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-048",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "social",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      7
+    ],
+    "text": "Synthetic social draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-049",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      8
+    ],
+    "text": "Synthetic carousel draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-050",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      9
+    ],
+    "text": "Synthetic clip draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-051",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "article",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      10
+    ],
+    "text": "Synthetic article draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-052",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      11
+    ],
+    "text": "Synthetic newsletter draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-053",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "social",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      12
+    ],
+    "text": "Synthetic social draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-054",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      13
+    ],
+    "text": "Synthetic carousel draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-055",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "draft",
+    "source_segment_indices": [
+      14
+    ],
+    "text": "Synthetic clip draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-056",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "article",
+    "version": 1,
+    "status": "review",
+    "source_segment_indices": [
+      15
+    ],
+    "text": "Synthetic article draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-057",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "newsletter",
+    "version": 1,
+    "status": "approved",
+    "source_segment_indices": [
+      16
+    ],
+    "text": "Synthetic newsletter draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-058",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "social",
+    "version": 1,
+    "status": "rendered",
+    "source_segment_indices": [
+      17
+    ],
+    "text": "Synthetic social draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-059",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "carousel",
+    "version": 1,
+    "status": "rejected",
+    "source_segment_indices": [
+      18
+    ],
+    "text": "Synthetic carousel draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-060",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "clip",
+    "version": 1,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      19
+    ],
+    "text": "Synthetic clip draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-061",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "article",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      0
+    ],
+    "text": "Synthetic article draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-062",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      1
+    ],
+    "text": "Synthetic newsletter draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-063",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "social",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      2
+    ],
+    "text": "Synthetic social draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-064",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      3
+    ],
+    "text": "Synthetic carousel draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-065",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      4
+    ],
+    "text": "Synthetic clip draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-066",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "article",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      5
+    ],
+    "text": "Synthetic article draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-067",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      6
+    ],
+    "text": "Synthetic newsletter draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-068",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "social",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      7
+    ],
+    "text": "Synthetic social draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-069",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      8
+    ],
+    "text": "Synthetic carousel draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-070",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      9
+    ],
+    "text": "Synthetic clip draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-071",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "article",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      10
+    ],
+    "text": "Synthetic article draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-072",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      11
+    ],
+    "text": "Synthetic newsletter draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-073",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "social",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      12
+    ],
+    "text": "Synthetic social draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-074",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      13
+    ],
+    "text": "Synthetic carousel draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-075",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      14
+    ],
+    "text": "Synthetic clip draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-076",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "article",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      15
+    ],
+    "text": "Synthetic article draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-077",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      16
+    ],
+    "text": "Synthetic newsletter draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-078",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "social",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      17
+    ],
+    "text": "Synthetic social draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-079",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      18
+    ],
+    "text": "Synthetic carousel draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-080",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      19
+    ],
+    "text": "Synthetic clip draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-081",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "article",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      0
+    ],
+    "text": "Synthetic article draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-082",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      1
+    ],
+    "text": "Synthetic newsletter draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-083",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "social",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      2
+    ],
+    "text": "Synthetic social draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-084",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      3
+    ],
+    "text": "Synthetic carousel draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-085",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      4
+    ],
+    "text": "Synthetic clip draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-086",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "article",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      5
+    ],
+    "text": "Synthetic article draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-087",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      6
+    ],
+    "text": "Synthetic newsletter draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-088",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "social",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      7
+    ],
+    "text": "Synthetic social draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-089",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      8
+    ],
+    "text": "Synthetic carousel draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-090",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      9
+    ],
+    "text": "Synthetic clip draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-091",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "article",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      10
+    ],
+    "text": "Synthetic article draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-092",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      11
+    ],
+    "text": "Synthetic newsletter draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-093",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "social",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      12
+    ],
+    "text": "Synthetic social draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-094",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      13
+    ],
+    "text": "Synthetic carousel draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-095",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      14
+    ],
+    "text": "Synthetic clip draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-096",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "article",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      15
+    ],
+    "text": "Synthetic article draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-097",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      16
+    ],
+    "text": "Synthetic newsletter draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-098",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "social",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      17
+    ],
+    "text": "Synthetic social draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-099",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      18
+    ],
+    "text": "Synthetic carousel draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-100",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      19
+    ],
+    "text": "Synthetic clip draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-101",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "article",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      0
+    ],
+    "text": "Synthetic article draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-102",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      1
+    ],
+    "text": "Synthetic newsletter draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-103",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "social",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      2
+    ],
+    "text": "Synthetic social draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-104",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      3
+    ],
+    "text": "Synthetic carousel draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-105",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      4
+    ],
+    "text": "Synthetic clip draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-106",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "article",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      5
+    ],
+    "text": "Synthetic article draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-107",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      6
+    ],
+    "text": "Synthetic newsletter draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-108",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "social",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      7
+    ],
+    "text": "Synthetic social draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-109",
+    "workspace_slug": "studio-alpha",
+    "source_key": "onboarding",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      8
+    ],
+    "text": "Synthetic carousel draft about a calmer first 30 days for b2b onboarding; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-110",
+    "workspace_slug": "studio-alpha",
+    "source_key": "privacy",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      9
+    ],
+    "text": "Synthetic clip draft about privacy reviews that move product work forward; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-111",
+    "workspace_slug": "studio-alpha",
+    "source_key": "energy",
+    "asset_type": "article",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      10
+    ],
+    "text": "Synthetic article draft about a practical energy retrofit decision meeting; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-112",
+    "workspace_slug": "studio-alpha",
+    "source_key": "supply",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      11
+    ],
+    "text": "Synthetic newsletter draft about supplier resilience without a giant scorecard; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-113",
+    "workspace_slug": "studio-alpha",
+    "source_key": "accessibility",
+    "asset_type": "social",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      12
+    ],
+    "text": "Synthetic social draft about making accessibility review part of delivery; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-114",
+    "workspace_slug": "studio-alpha",
+    "source_key": "data_quality",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      13
+    ],
+    "text": "Synthetic carousel draft about data quality meetings that end with a decision; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-115",
+    "workspace_slug": "studio-beta",
+    "source_key": "remote_work",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "draft",
+    "source_segment_indices": [
+      14
+    ],
+    "text": "Synthetic clip draft about better remote workshops for complex decisions; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-116",
+    "workspace_slug": "studio-beta",
+    "source_key": "incident",
+    "asset_type": "article",
+    "version": 2,
+    "status": "review",
+    "source_segment_indices": [
+      15
+    ],
+    "text": "Synthetic article draft about a measured response to a security incident; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-117",
+    "workspace_slug": "studio-beta",
+    "source_key": "circular",
+    "asset_type": "newsletter",
+    "version": 2,
+    "status": "approved",
+    "source_segment_indices": [
+      16
+    ],
+    "text": "Synthetic newsletter draft about circular purchasing for ordinary operations; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-118",
+    "workspace_slug": "studio-beta",
+    "source_key": "maintenance",
+    "asset_type": "social",
+    "version": 2,
+    "status": "rendered",
+    "source_segment_indices": [
+      17
+    ],
+    "text": "Synthetic social draft about predictive maintenance with ordinary evidence; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-119",
+    "workspace_slug": "studio-beta",
+    "source_key": "knowledge",
+    "asset_type": "carousel",
+    "version": 2,
+    "status": "rejected",
+    "source_segment_indices": [
+      18
+    ],
+    "text": "Synthetic carousel draft about internal knowledge that stays useful; review the cited segment before approval."
+  },
+  {
+    "fixture_id": "asset-version-120",
+    "workspace_slug": "studio-beta",
+    "source_key": "clinic",
+    "asset_type": "clip",
+    "version": 2,
+    "status": "needs_revision",
+    "source_segment_indices": [
+      19
+    ],
+    "text": "Synthetic clip draft about reducing handoff friction in a fictional clinic; review the cited segment before approval."
+  }
+]

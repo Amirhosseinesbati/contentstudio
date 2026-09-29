@@ -1,0 +1,13 @@
+{
+  "label": "Synthetic demo presentation",
+  "source_key": "energy",
+  "narrator_voice": "Microsoft Mark",
+  "speech_rate_setting": 5,
+  "duration_ms": 550250,
+  "width": 1280,
+  "height": 720,
+  "segment_count": 20,
+  "media_sha256": "e15c6112180851728295dfd341012399d9ddb589f12583d5a944623675ace840",
+  "method": "Windows SAPI + Pillow slides + FFmpeg",
+  "limitations": "Synthetic narration, not a human webinar; transcript timing measured at segment boundaries only"
+}

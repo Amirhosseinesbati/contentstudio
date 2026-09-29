@@ -1,0 +1,70 @@
+{
+  "baseUrl": "http://127.0.0.1:55426/",
+  "generatedAt": "2026-09-28T02:07:48.272Z",
+  "screenshots": [
+    {
+      "file": "01-login-1440.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 246744,
+      "scrollWidth": 1440,
+      "heading": "Good storiesstart withgood sources."
+    },
+    {
+      "file": "02-studio-1440.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 170383,
+      "scrollWidth": 1440,
+      "heading": "Ideas with receipts."
+    },
+    {
+      "file": "03-carousel-1440.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 276461,
+      "scrollWidth": 1440,
+      "heading": "Ideas with receipts."
+    },
+    {
+      "file": "04-clip-1440.png",
+      "width": 1440,
+      "height": 900,
+      "bytes": 241598,
+      "scrollWidth": 1440,
+      "heading": "Ideas with receipts."
+    },
+    {
+      "file": "05-review-1024.png",
+      "width": 1024,
+      "height": 900,
+      "bytes": 173516,
+      "scrollWidth": 1024,
+      "heading": "Ideas with receipts."
+    },
+    {
+      "file": "06-board-1024.png",
+      "width": 1024,
+      "height": 900,
+      "bytes": 155848,
+      "scrollWidth": 1024,
+      "heading": "Every story, in motion."
+    },
+    {
+      "file": "07-calendar-390.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 51556,
+      "scrollWidth": 390,
+      "heading": "Ready when you are."
+    },
+    {
+      "file": "08-library-390.png",
+      "width": 390,
+      "height": 960,
+      "bytes": 64849,
+      "scrollWidth": 390,
+      "heading": "The source library."
+    }
+  ]
+}

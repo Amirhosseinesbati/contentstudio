@@ -1,0 +1,812 @@
+{
+  "run_at_utc": "2026-09-27T21:01:52.428346+00:00",
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "dataset": "Synthetic demo dataset; entity-disjoint development/held-out split",
+  "total_cases": 80,
+  "totals": {
+    "pass": 70,
+    "not_run": 10
+  },
+  "by_defect": {
+    "altered_number": {
+      "pass": 10
+    },
+    "corrected_transcript": {
+      "pass": 10
+    },
+    "duplicate_publishing": {
+      "not_run": 10
+    },
+    "missing_attribution": {
+      "pass": 10
+    },
+    "negation_removed_by_clipping": {
+      "pass": 10
+    },
+    "quote_drift": {
+      "pass": 10
+    },
+    "render_failure": {
+      "pass": 10
+    },
+    "unsupported_statistic": {
+      "pass": 10
+    }
+  },
+  "cases": [
+    {
+      "case_id": "case-001",
+      "defect_type": "altered_number",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 203"
+      ]
+    },
+    {
+      "case_id": "case-002",
+      "defect_type": "unsupported_statistic",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-003",
+      "defect_type": "quote_drift",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: A follow-up question is what could mak definitely"
+      ]
+    },
+    {
+      "case_id": "case-004",
+      "defect_type": "missing_attribution",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-005",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-006",
+      "defect_type": "corrected_transcript",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-007",
+      "defect_type": "render_failure",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-008",
+      "defect_type": "duplicate_publishing",
+      "split": "development",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-009",
+      "defect_type": "altered_number",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 193"
+      ]
+    },
+    {
+      "case_id": "case-010",
+      "defect_type": "unsupported_statistic",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-011",
+      "defect_type": "quote_drift",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: A participant asks: What assumption te definitely"
+      ]
+    },
+    {
+      "case_id": "case-012",
+      "defect_type": "missing_attribution",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-013",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-014",
+      "defect_type": "corrected_transcript",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-015",
+      "defect_type": "render_failure",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-016",
+      "defect_type": "duplicate_publishing",
+      "split": "development",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-017",
+      "defect_type": "altered_number",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 203"
+      ]
+    },
+    {
+      "case_id": "case-018",
+      "defect_type": "unsupported_statistic",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-019",
+      "defect_type": "quote_drift",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: Here is the practical move I would mak definitely"
+      ]
+    },
+    {
+      "case_id": "case-020",
+      "defect_type": "missing_attribution",
+      "split": "development",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-021",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-022",
+      "defect_type": "corrected_transcript",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-023",
+      "defect_type": "render_failure",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-024",
+      "defect_type": "duplicate_publishing",
+      "split": "held_out",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-025",
+      "defect_type": "altered_number",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 233"
+      ]
+    },
+    {
+      "case_id": "case-026",
+      "defect_type": "unsupported_statistic",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-027",
+      "defect_type": "quote_drift",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: A follow-up question is what could mak definitely"
+      ]
+    },
+    {
+      "case_id": "case-028",
+      "defect_type": "missing_attribution",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-029",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-030",
+      "defect_type": "corrected_transcript",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-031",
+      "defect_type": "render_failure",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-032",
+      "defect_type": "duplicate_publishing",
+      "split": "held_out",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-033",
+      "defect_type": "altered_number",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 215"
+      ]
+    },
+    {
+      "case_id": "case-034",
+      "defect_type": "unsupported_statistic",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-035",
+      "defect_type": "quote_drift",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: Here is the practical move I would mak definitely"
+      ]
+    },
+    {
+      "case_id": "case-036",
+      "defect_type": "missing_attribution",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-037",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-038",
+      "defect_type": "corrected_transcript",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-039",
+      "defect_type": "render_failure",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-040",
+      "defect_type": "duplicate_publishing",
+      "split": "held_out",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-041",
+      "defect_type": "altered_number",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 233"
+      ]
+    },
+    {
+      "case_id": "case-042",
+      "defect_type": "unsupported_statistic",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-043",
+      "defect_type": "quote_drift",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: A follow-up question is what could mak definitely"
+      ]
+    },
+    {
+      "case_id": "case-044",
+      "defect_type": "missing_attribution",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-045",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-046",
+      "defect_type": "corrected_transcript",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-047",
+      "defect_type": "render_failure",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-048",
+      "defect_type": "duplicate_publishing",
+      "split": "held_out",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-049",
+      "defect_type": "altered_number",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 215"
+      ]
+    },
+    {
+      "case_id": "case-050",
+      "defect_type": "unsupported_statistic",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-051",
+      "defect_type": "quote_drift",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: A participant asks: What assumption te definitely"
+      ]
+    },
+    {
+      "case_id": "case-052",
+      "defect_type": "missing_attribution",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-053",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-054",
+      "defect_type": "corrected_transcript",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-055",
+      "defect_type": "render_failure",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-056",
+      "defect_type": "duplicate_publishing",
+      "split": "held_out",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-057",
+      "defect_type": "altered_number",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 233"
+      ]
+    },
+    {
+      "case_id": "case-058",
+      "defect_type": "unsupported_statistic",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-059",
+      "defect_type": "quote_drift",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: Here is the practical move I would mak definitely"
+      ]
+    },
+    {
+      "case_id": "case-060",
+      "defect_type": "missing_attribution",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-061",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-062",
+      "defect_type": "corrected_transcript",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-063",
+      "defect_type": "render_failure",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-064",
+      "defect_type": "duplicate_publishing",
+      "split": "held_out",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-065",
+      "defect_type": "altered_number",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 215"
+      ]
+    },
+    {
+      "case_id": "case-066",
+      "defect_type": "unsupported_statistic",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-067",
+      "defect_type": "quote_drift",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: A follow-up question is what could mak definitely"
+      ]
+    },
+    {
+      "case_id": "case-068",
+      "defect_type": "missing_attribution",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-069",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-070",
+      "defect_type": "corrected_transcript",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-071",
+      "defect_type": "render_failure",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-072",
+      "defect_type": "duplicate_publishing",
+      "split": "held_out",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    },
+    {
+      "case_id": "case-073",
+      "defect_type": "altered_number",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 233"
+      ]
+    },
+    {
+      "case_id": "case-074",
+      "defect_type": "unsupported_statistic",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Number lacks cited transcript evidence",
+      "actual_warnings": [
+        "Number lacks cited transcript evidence: 73%"
+      ]
+    },
+    {
+      "case_id": "case-075",
+      "defect_type": "quote_drift",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Quote not found verbatim",
+      "actual_warnings": [
+        "Quote not found verbatim in cited transcript: Here is the practical move I would mak definitely"
+      ]
+    },
+    {
+      "case_id": "case-076",
+      "defect_type": "missing_attribution",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Missing source segment evidence",
+      "actual_warnings": [
+        "Missing source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-077",
+      "defect_type": "negation_removed_by_clipping",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Clip cuts through a cited transcript segment",
+      "actual_warnings": [
+        "Clip cuts through a cited transcript segment; review full context"
+      ]
+    },
+    {
+      "case_id": "case-078",
+      "defect_type": "corrected_transcript",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Unknown source segment evidence",
+      "actual_warnings": [
+        "Unknown source segment evidence"
+      ]
+    },
+    {
+      "case_id": "case-079",
+      "defect_type": "render_failure",
+      "split": "held_out",
+      "status": "pass",
+      "expected_warning": "Carousel requires 6",
+      "actual_warnings": [
+        "Carousel requires 6\u20138 slides"
+      ]
+    },
+    {
+      "case_id": "case-080",
+      "defect_type": "duplicate_publishing",
+      "split": "held_out",
+      "status": "not_run",
+      "reason": "Requires persisted dispatch integration"
+    }
+  ],
+  "interpretation": "A deterministic warning match, not a model accuracy or factual correctness score."
+}

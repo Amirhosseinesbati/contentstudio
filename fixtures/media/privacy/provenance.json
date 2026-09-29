@@ -1,0 +1,13 @@
+{
+  "label": "Synthetic demo presentation",
+  "source_key": "privacy",
+  "narrator_voice": "Microsoft Zira Desktop",
+  "speech_rate_setting": 5,
+  "duration_ms": 592080,
+  "width": 1280,
+  "height": 720,
+  "segment_count": 20,
+  "media_sha256": "52c187e42ea99aa4623eecdbe450850793089b49fb4420ef903eb395db6a661d",
+  "method": "Windows SAPI + Pillow slides + FFmpeg",
+  "limitations": "Synthetic narration, not a human webinar; transcript timing measured at segment boundaries only"
+}

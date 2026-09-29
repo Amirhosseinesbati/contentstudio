@@ -1,0 +1,88 @@
+{
+  "id": "contentstudio_render_item_v1",
+  "name": "ContentStudio / Render approved asset",
+  "nodes": [
+    {
+      "id": "99a39e24-0376-50f7-9ba5-2393b88ba225",
+      "name": "Render boundary",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -20
+      ],
+      "parameters": {
+        "content": "## Approved version only\nThe service verifies exact approval/version and renders via validated FFmpeg/template arguments. A retry uses the durable render job key.",
+        "height": 180,
+        "width": 500
+      }
+    },
+    {
+      "id": "243cad29-b985-52ad-bb09-96cc4b2e2c19",
+      "name": "Accept approved item",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        220
+      ],
+      "parameters": {
+        "inputSource": "passthrough"
+      }
+    },
+    {
+      "id": "48ac27a2-2ab4-55ca-9ae6-e7973c4df526",
+      "name": "Render approved version",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        340,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/render",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 300000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $json.workspace_id, asset_version_id: $json.asset_version_id}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Accept approved item": {
+      "main": [
+        [
+          {
+            "node": "Render approved version",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": false,
+    "errorWorkflow": "__workflow:error_handler__"
+  },
+  "active": false,
+  "pinData": {}
+}

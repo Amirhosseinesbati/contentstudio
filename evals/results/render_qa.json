@@ -1,0 +1,84 @@
+{
+  "label": "Synthetic demo render verification",
+  "presentations": [
+    {
+      "path": "./fixtures\\media\\onboarding\\presentation.mp4",
+      "duration_ms": 600000,
+      "width": 1280,
+      "height": 720,
+      "bytes": 7807141,
+      "audio_present": true,
+      "full_decode_ok": true
+    },
+    {
+      "path": "./fixtures\\media\\privacy\\presentation.mp4",
+      "duration_ms": 592080,
+      "width": 1280,
+      "height": 720,
+      "bytes": 6689005,
+      "audio_present": true,
+      "full_decode_ok": true
+    },
+    {
+      "path": "./fixtures\\media\\energy\\presentation.mp4",
+      "duration_ms": 550250,
+      "width": 1280,
+      "height": 720,
+      "bytes": 7268433,
+      "audio_present": true,
+      "full_decode_ok": true
+    }
+  ],
+  "carousel": {
+    "slide_count": 7,
+    "png_paths": [
+      "./output\\render-qa\\carousel\\slide-01.png",
+      "./output\\render-qa\\carousel\\slide-02.png",
+      "./output\\render-qa\\carousel\\slide-03.png",
+      "./output\\render-qa\\carousel\\slide-04.png",
+      "./output\\render-qa\\carousel\\slide-05.png",
+      "./output\\render-qa\\carousel\\slide-06.png",
+      "./output\\render-qa\\carousel\\slide-07.png"
+    ],
+    "pdf_path": "./output\\render-qa\\carousel\\carousel.pdf",
+    "render_wall_ms": 1700
+  },
+  "clips": [
+    {
+      "path": "./output\\render-qa\\clip-01\\clip.mp4",
+      "duration_ms": 34000,
+      "width": 720,
+      "height": 1280,
+      "bytes": 642564,
+      "audio_present": true,
+      "full_decode_ok": true,
+      "subtitle_path": "./output\\render-qa\\clip-01\\captions.srt",
+      "render_wall_ms": 5467
+    },
+    {
+      "path": "./output\\render-qa\\clip-02\\clip.mp4",
+      "duration_ms": 33500,
+      "width": 720,
+      "height": 1280,
+      "bytes": 646126,
+      "audio_present": true,
+      "full_decode_ok": true,
+      "subtitle_path": "./output\\render-qa\\clip-02\\captions.srt",
+      "render_wall_ms": 4936
+    },
+    {
+      "path": "./output\\render-qa\\clip-03\\clip.mp4",
+      "duration_ms": 34000,
+      "width": 720,
+      "height": 1280,
+      "bytes": 648954,
+      "audio_present": true,
+      "full_decode_ok": true,
+      "subtitle_path": "./output\\render-qa\\clip-03\\captions.srt",
+      "render_wall_ms": 4680
+    }
+  ],
+  "total_wall_ms": 22722,
+  "environment": "Windows local; FFmpeg 7.1 binary from temporary imageio-ffmpeg 0.6.0 install",
+  "limits": "Decode and metadata verified. Human review of every slide/frame and audible boundaries is separate."
+}

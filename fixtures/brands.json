@@ -1,0 +1,60 @@
+[
+  {
+    "workspace_slug": "studio-alpha",
+    "name": "Morrow Research",
+    "version": 1,
+    "tone": "clear, careful, useful",
+    "rules": {
+      "accent": "#D86B34",
+      "prohibited_phrases": [
+        "guaranteed",
+        "viral",
+        "always"
+      ],
+      "max_social_chars": 650
+    }
+  },
+  {
+    "workspace_slug": "studio-alpha",
+    "name": "Morrow Research",
+    "version": 2,
+    "tone": "specific, calm, evidence led",
+    "rules": {
+      "accent": "#CC5E2B",
+      "prohibited_phrases": [
+        "guaranteed",
+        "viral",
+        "proven ROI"
+      ],
+      "max_social_chars": 650
+    }
+  },
+  {
+    "workspace_slug": "studio-beta",
+    "name": "Alder Field Notes",
+    "version": 1,
+    "tone": "practical and direct",
+    "rules": {
+      "accent": "#B85C36",
+      "prohibited_phrases": [
+        "breakthrough",
+        "risk free"
+      ],
+      "max_social_chars": 650
+    }
+  },
+  {
+    "workspace_slug": "studio-beta",
+    "name": "Alder Field Notes",
+    "version": 2,
+    "tone": "measured, approachable",
+    "rules": {
+      "accent": "#AE5B39",
+      "prohibited_phrases": [
+        "guaranteed",
+        "no effort"
+      ],
+      "max_social_chars": 650
+    }
+  }
+]

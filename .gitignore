@@ -1,0 +1,26 @@
+.env
+.env.*
+!.env.example
+!.env.sample
+.cache/
+tmp/
+output/
+apps/api/data/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.ruff_cache/
+**/.mypy_cache/
+**/.venv/
+**/node_modules/
+**/dist/
+**/.uv-cache/
+**/.pytest_tmp/
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.log
+
+# Local product brief; excluded from the public portfolio repository.
+/09-n8n-contentstudio.md

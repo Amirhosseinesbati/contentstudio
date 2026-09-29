@@ -1,0 +1,23 @@
+{
+  "observed_date_utc": "2026-09-28",
+  "environment": "local-demo",
+  "simulated_external_systems": true,
+  "workflow_version": "2.40.7",
+  "due_execution_id": "39",
+  "dispatch_execution_id": "40",
+  "dispatch_execution_status": "success",
+  "simulated_first_response": 429,
+  "visited_retry_nodes": [
+    "Rate limited?",
+    "Wait for retry window",
+    "Retry WordPress draft once",
+    "Complete retried dispatch"
+  ],
+  "created_simulator_draft_id": 1001,
+  "draft_count_after_retry": 1,
+  "duplicate_due_webhook_status": 202,
+  "duplicate_prepare_claimed": false,
+  "ledger_status_after_duplicate": "complete",
+  "draft_count_after_duplicate": 1,
+  "payloads_and_secrets_saved": false
+}

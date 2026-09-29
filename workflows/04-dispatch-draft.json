@@ -1,0 +1,660 @@
+{
+  "id": "contentstudio_dispatch_draft_v1",
+  "name": "ContentStudio / Dispatch WordPress draft",
+  "nodes": [
+    {
+      "id": "d1365a03-235e-5b4b-9afc-8affac647e94",
+      "name": "Dispatch boundary",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -20
+      ],
+      "parameters": {
+        "content": "## Draft only\nPrepare claims a unique operation key. WordPress receives status=draft. A known 429 waits once with Retry-After plus jitter. Permanent 4xx goes to the exception queue. Timeout or 5xx is uncertain and enters reconciliation; no blind write retry.",
+        "height": 180,
+        "width": 760
+      }
+    },
+    {
+      "id": "1add3d68-0523-55a8-9272-4320b17b7157",
+      "name": "Accept draft item",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        220
+      ],
+      "parameters": {
+        "inputSource": "passthrough"
+      }
+    },
+    {
+      "id": "b5c5ad91-b115-52b1-becc-ff72708aa75e",
+      "name": "Claim dispatch operation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/dispatch/prepare",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $json.workspace_id, asset_version_id: $json.asset_version_id, channel: $json.channel, operation_key: $json.operation_key}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "9ea53e5b-3f4a-52f2-9c3c-d074a61a552d",
+      "name": "Claim acquired?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        220
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ca6f1564-2655-563a-86c0-4f4dd6fc3a48",
+              "leftValue": "={{ $json.claimed === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "317b91be-d431-5a71-9101-d27b77411cb3",
+      "name": "Create WordPress draft",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__WORDPRESS_BASE_URL__/wp-json/wp/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('Claim dispatch operation').first().json.draft) }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Idempotency-Key",
+              "value": "={{ $('Claim dispatch operation').first().json.operation_key }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "__WORDPRESS_CREDENTIAL_ID__",
+          "name": "ContentStudio WordPress draft"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "655c16b0-e74b-5039-9fb9-338420544ed2",
+      "name": "Draft created?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1180,
+        220
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "21659a91-8cce-5bbb-aab8-e16819f6f42f",
+              "leftValue": "={{ $json.statusCode >= 200 && $json.statusCode < 300 && !!$json.body?.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "85a64430-1c7f-5f91-9ace-9ad50f5e5678",
+      "name": "Complete dispatch ledger",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1490,
+        80
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/dispatch/complete",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Accept draft item').first().json.workspace_id, operation_key: $('Claim dispatch operation').first().json.operation_key, external_id: String($json.body.id), status: 'draft'}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "84c14eba-e1ba-5fa0-ae24-e2282b18554d",
+      "name": "Rate limited?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1450,
+        360
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "533c4962-a352-5c8f-a203-198a01e34d3b",
+              "leftValue": "={{ $json.statusCode === 429 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "e6b685c2-4588-5dff-ac74-c97b4eae51b8",
+      "name": "Wait for retry window",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1740,
+        280
+      ],
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": "={{ Math.min(60, Math.max(2, Number($json.headers?.['retry-after']) || 2)) + Math.random() }}",
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "fe3f3d11-0f49-54de-a175-4085be9a9b47",
+      "name": "Retry WordPress draft once",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2020,
+        280
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__WORDPRESS_BASE_URL__/wp-json/wp/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($('Claim dispatch operation').first().json.draft) }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Idempotency-Key",
+              "value": "={{ $('Claim dispatch operation').first().json.operation_key }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "__WORDPRESS_CREDENTIAL_ID__",
+          "name": "ContentStudio WordPress draft"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "41dd36fb-d627-5c8e-ad68-1a51be72cbda",
+      "name": "Retry created draft?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2300,
+        280
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "22aefc58-b75a-594b-9684-f463d314546a",
+              "leftValue": "={{ $json.statusCode >= 200 && $json.statusCode < 300 && !!$json.body?.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "784f000a-700d-560b-b2a6-7f10bd2271dd",
+      "name": "Complete retried dispatch",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2580,
+        180
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/dispatch/complete",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Accept draft item').first().json.workspace_id, operation_key: $('Claim dispatch operation').first().json.operation_key, external_id: String($json.body.id), status: 'draft'}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "7d359353-0a09-52ac-bc4c-73375ec26a04",
+      "name": "Queue rejected or uncertain response",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1740,
+        510
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/errors",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Accept draft item').first().json.workspace_id, operation_key: $('Claim dispatch operation').first().json.operation_key, error: 'WordPress draft HTTP ' + String($json.statusCode ?? 'unavailable'), outcome: ($json.statusCode >= 400 && $json.statusCode < 500 && $json.statusCode !== 408 ? 'failed' : 'unknown')}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "b782d3cc-0b2d-55eb-93ff-f9bbfb6199d6",
+      "name": "Queue exhausted retry",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2580,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/errors",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Accept draft item').first().json.workspace_id, operation_key: $('Claim dispatch operation').first().json.operation_key, error: 'WordPress draft HTTP ' + String($json.statusCode ?? 'unavailable'), outcome: ($json.statusCode >= 400 && $json.statusCode < 500 && $json.statusCode !== 408 ? 'failed' : 'unknown')}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "b5721e5e-1bd7-57ee-ad41-b7802503ac9b",
+      "name": "Queue network timeout",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1190,
+        620
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/errors",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Accept draft item').first().json.workspace_id, operation_key: $('Claim dispatch operation').first().json.operation_key, error: 'WordPress draft network outcome uncertain; reconcile by slug', outcome: 'unknown'}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "44ba7c0c-1e3d-59f6-8a66-cf35f79fc4df",
+      "name": "Queue retry timeout",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2300,
+        620
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/errors",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Accept draft item').first().json.workspace_id, operation_key: $('Claim dispatch operation').first().json.operation_key, error: 'WordPress draft network outcome uncertain; reconcile by slug', outcome: 'unknown'}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Accept draft item": {
+      "main": [
+        [
+          {
+            "node": "Claim dispatch operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim dispatch operation": {
+      "main": [
+        [
+          {
+            "node": "Claim acquired?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claim acquired?": {
+      "main": [
+        [
+          {
+            "node": "Create WordPress draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create WordPress draft": {
+      "main": [
+        [
+          {
+            "node": "Draft created?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Queue network timeout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft created?": {
+      "main": [
+        [
+          {
+            "node": "Complete dispatch ledger",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Rate limited?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rate limited?": {
+      "main": [
+        [
+          {
+            "node": "Wait for retry window",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Queue rejected or uncertain response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for retry window": {
+      "main": [
+        [
+          {
+            "node": "Retry WordPress draft once",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry WordPress draft once": {
+      "main": [
+        [
+          {
+            "node": "Retry created draft?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Queue retry timeout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry created draft?": {
+      "main": [
+        [
+          {
+            "node": "Complete retried dispatch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Queue exhausted retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": false,
+    "errorWorkflow": "__workflow:error_handler__"
+  },
+  "active": false,
+  "pinData": {}
+}

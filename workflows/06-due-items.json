@@ -1,0 +1,553 @@
+{
+  "id": "contentstudio_due_items_v1",
+  "name": "ContentStudio / Process due editorial actions",
+  "nodes": [
+    {
+      "id": "488dd452-aa57-59b0-ac6d-0725607b9c34",
+      "name": "Scheduled work",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -20
+      ],
+      "parameters": {
+        "content": "## Recoverable polling\nApproved render/package/dispatch work is queried from Postgres. This avoids one Wait node per approval. Only explicit demo activation publishes this schedule.",
+        "height": 180,
+        "width": 600
+      }
+    },
+    {
+      "id": "ac3b462a-5169-50be-9bed-e851158ac24f",
+      "name": "Check due items",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        40,
+        220
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "4b281340-6f78-5c02-acdf-8f6a24f520da",
+      "name": "Replay due fixture",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        40,
+        430
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contentstudio/due-demo",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {
+          "noResponseBody": true,
+          "responseCode": {
+            "values": {
+              "responseCode": "customCode",
+              "customCode": 202
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      },
+      "webhookId": "b7977290-1a3e-53e3-a81f-5f4dd7d477b1"
+    },
+    {
+      "id": "e80976d9-2255-584e-abbe-c8880cb53ed6",
+      "name": "List workspaces",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        220
+      ],
+      "parameters": {
+        "url": "__API_BASE_URL__/internal/workflows/workspaces",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "32bf2c4a-7b21-574d-8236-aca6f23650ef",
+      "name": "Expand workspaces",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return ($input.first().json.items || []).map((workspace, i) => ({json: {workspace_id: workspace.id}, pairedItem: {item: 0}}));"
+      }
+    },
+    {
+      "id": "f501b505-ab7a-50cf-880e-9f3dd1149b31",
+      "name": "Find due actions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        220
+      ],
+      "parameters": {
+        "url": "__API_BASE_URL__/internal/workflows/due",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "workspace_id",
+              "value": "={{ $json.workspace_id }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "82e6b3d5-100d-5ac5-91a4-0438c760b802",
+      "name": "Expand due actions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1160,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().flatMap((row, i) => (row.json.items || []).map(item => ({json: item, pairedItem: {item: i}})));"
+      }
+    },
+    {
+      "id": "b8bee928-2528-5daf-81bb-ded44ddb53c6",
+      "name": "Needs render?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1450,
+        220
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "72699385-834a-50ee-82ad-81d51a83738b",
+              "leftValue": "={{ $json.action === 'render' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "4ac8eba7-5d61-5cb7-9b2c-09b38a51110c",
+      "name": "Render version",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1720,
+        80
+      ],
+      "parameters": {
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "__workflow:render_item__",
+          "mode": "id"
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    },
+    {
+      "id": "11fea41a-95df-5301-bddd-7a2d28e9362a",
+      "name": "Needs package?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1720,
+        360
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "26bc93ca-bce2-5106-b66f-2adfad184076",
+              "leftValue": "={{ $json.action === 'package' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "e52e218c-b508-51ca-ba7b-0a5f0b4f2bad",
+      "name": "Package approved batch",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2010,
+        280
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/package",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 180000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $json.workspace_id, batch_id: $json.batch_id}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "24d3da6a-c4d7-5ae1-bc64-77251fed4f0c",
+      "name": "Needs dispatch?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2010,
+        510
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3bb5f790-6b8f-5407-8f37-4557a5b08dfa",
+              "leftValue": "={{ $json.action === 'dispatch' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "b34c1b72-2b6a-5ce7-8f38-0d370ca39a6a",
+      "name": "Dispatch WordPress draft",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2300,
+        510
+      ],
+      "parameters": {
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "__workflow:dispatch_draft__",
+          "mode": "id"
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    },
+    {
+      "id": "a093d7e4-ee53-5bcc-90de-e2d7745f3bfe",
+      "name": "Needs local outbox?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2300,
+        760
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0477768a-7f1a-5f98-8f57-51cdb30f1428",
+              "leftValue": "={{ $json.action === 'outbox' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "70749b89-6355-5de0-bfde-a8613551c204",
+      "name": "Prepare newsletter or social outbox",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2590,
+        760
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/outbox",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $json.workspace_id, asset_version_id: $json.asset_version_id, channel: $json.channel, operation_key: $json.operation_key}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Check due items": {
+      "main": [
+        [
+          {
+            "node": "List workspaces",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replay due fixture": {
+      "main": [
+        [
+          {
+            "node": "List workspaces",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List workspaces": {
+      "main": [
+        [
+          {
+            "node": "Expand workspaces",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand workspaces": {
+      "main": [
+        [
+          {
+            "node": "Find due actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find due actions": {
+      "main": [
+        [
+          {
+            "node": "Expand due actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand due actions": {
+      "main": [
+        [
+          {
+            "node": "Needs render?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs render?": {
+      "main": [
+        [
+          {
+            "node": "Render version",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Needs package?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs package?": {
+      "main": [
+        [
+          {
+            "node": "Package approved batch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Needs dispatch?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs dispatch?": {
+      "main": [
+        [
+          {
+            "node": "Dispatch WordPress draft",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Needs local outbox?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs local outbox?": {
+      "main": [
+        [
+          {
+            "node": "Prepare newsletter or social outbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": false,
+    "errorWorkflow": "__workflow:error_handler__"
+  },
+  "active": false,
+  "pinData": {}
+}

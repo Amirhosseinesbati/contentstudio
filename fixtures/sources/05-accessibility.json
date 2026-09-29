@@ -1,0 +1,133 @@
+{
+  "source_key": "accessibility",
+  "workspace_slug": "studio-alpha",
+  "title": "Making accessibility review part of delivery",
+  "kind": "transcript_fixture",
+  "rights_status": "owned_synthetic_script",
+  "provenance": "Authored fictional script; no real customer recording",
+  "recorded_on": "2026-08-12",
+  "duration_ms": 935577,
+  "word_count": 2753,
+  "segments": [
+    {
+      "start_ms": 0,
+      "end_ms": 48325,
+      "speaker": "Synthetic narrator",
+      "text": "Welcome to this synthetic Morrow field session, Making accessibility review part of delivery. This presentation is an authored example for testing an editorial workflow. The company, project situations, and participants are fictional. Our working proposition is simple: Accessibility improves when real tasks are tested throughout delivery, not only at release. We will examine six decisions, not a universal formula. Each example is a scenario, and any number I mention belongs to that scenario unless I explicitly say otherwise. The aim is to make an audience more precise about what it can conclude from source material. A content editor should be able to return to this recording, read the complete surrounding passage, and decide whether a headline preserves its meaning. We will also correct an earlier statement when the evidence changes. That correction is part of the story, not an embarrassment to remove."
+    },
+    {
+      "start_ms": 48325,
+      "end_ms": 99326,
+      "speaker": "Synthetic narrator",
+      "text": "A participant asks: What changed your view of task selection, and which observation is strongest? Let me start with a concrete observation. In digital accessibility, a home page audit can miss the workflow people actually need. That sounds ordinary, but it changes what a team should inspect before choosing a remedy. For instance, a fictional buyer could browse pricing but could not finish the upload form by keyboard. This is a fictional situation, not a customer result. The useful detail is the sequence: someone made an assumption, the work proceeded, and a later fact exposed the gap. If we reduce the whole episode to an upbeat slogan, we lose the decision the team actually faced. The first question should therefore be what is observable in the source, what remains inferred, and who can verify the missing part. That distinction matters when this recording becomes a newsletter or a short clip."
+    },
+    {
+      "start_ms": 99326,
+      "end_ms": 144208,
+      "speaker": "Synthetic narrator",
+      "text": "Here is the practical move I would make: choose critical journeys for repeated checks. I would write that action where the people doing the work can see it, attach an owner, and define what evidence would change our mind. The point is not to add a ritual. The point is to make a choice that another person can inspect next week. In the fictional example, I would ask the responsible team to show the original record and one counterexample before declaring the issue solved. A presentation can make that step sound neat, while daily work is usually messier. We should preserve that messiness in a source note. If an editor selects a sentence from here, the claim needs this surrounding explanation, because the recommendation is conditional and depends on the observed situation."
+    },
+    {
+      "start_ms": 144208,
+      "end_ms": 187068,
+      "speaker": "Synthetic narrator",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: an automated scan covers only a subset of barriers. That caveat is not a footnote to hide in small print. It sets the boundary of the claim. An honest social post might say that this approach helped the fictional team frame a decision, then invite the reader to check the conditions in their own setting. It should not say the approach guarantees an outcome. If we later find a conflicting record, we will update the transcript and invalidate only the assets that depend on this point. Other approved material can stand if its sources remain unchanged. That is how a careful editorial process can move quickly without making every revision a full restart."
+    },
+    {
+      "start_ms": 187068,
+      "end_ms": 237076,
+      "speaker": "Synthetic narrator",
+      "text": "A participant asks: If a small team can examine only one part of content structure, where should it begin? Let me start with a concrete observation. In digital accessibility, visual hierarchy is not always programmatic hierarchy. That sounds ordinary, but it changes what a team should inspect before choosing a remedy. For instance, a bold line looked like a heading but screen-reader navigation skipped it. This is a fictional situation, not a customer result. The useful detail is the sequence: someone made an assumption, the work proceeded, and a later fact exposed the gap. If we reduce the whole episode to an upbeat slogan, we lose the decision the team actually faced. The first question should therefore be what is observable in the source, what remains inferred, and who can verify the missing part. That distinction matters when this recording becomes a newsletter or a short clip."
+    },
+    {
+      "start_ms": 237076,
+      "end_ms": 282982,
+      "speaker": "Synthetic narrator",
+      "text": "Here is the practical move I would make: use semantic headings and labels in the component system. I would write that action where the people doing the work can see it, attach an owner, and define what evidence would change our mind. The point is not to add a ritual. The point is to make a choice that another person can inspect next week. In the fictional example, I would ask the responsible team to show the original record and one counterexample before declaring the issue solved. A presentation can make that step sound neat, while daily work is usually messier. We should preserve that messiness in a source note. If an editor selects a sentence from here, the claim needs this surrounding explanation, because the recommendation is conditional and depends on the observed situation."
+    },
+    {
+      "start_ms": 282982,
+      "end_ms": 324902,
+      "speaker": "Synthetic narrator",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: semantics need human testing in context. That caveat is not a footnote to hide in small print. It sets the boundary of the claim. An honest social post might say that this approach helped the fictional team frame a decision, then invite the reader to check the conditions in their own setting. It should not say the approach guarantees an outcome. If we later find a conflicting record, we will update the transcript and invalidate only the assets that depend on this point. Other approved material can stand if its sources remain unchanged. That is how a careful editorial process can move quickly without making every revision a full restart."
+    },
+    {
+      "start_ms": 324902,
+      "end_ms": 374499,
+      "speaker": "Synthetic narrator",
+      "text": "A participant asks: What did the example teach you about focus that a checklist would miss? Let me start with a concrete observation. In digital accessibility, a keyboard user needs to know where an action moved them. That sounds ordinary, but it changes what a team should inspect before choosing a remedy. For instance, a modal closed and focus returned to the page top. This is a fictional situation, not a customer result. The useful detail is the sequence: someone made an assumption, the work proceeded, and a later fact exposed the gap. If we reduce the whole episode to an upbeat slogan, we lose the decision the team actually faced. The first question should therefore be what is observable in the source, what remains inferred, and who can verify the missing part. That distinction matters when this recording becomes a newsletter or a short clip."
+    },
+    {
+      "start_ms": 374499,
+      "end_ms": 419692,
+      "speaker": "Synthetic narrator",
+      "text": "Here is the practical move I would make: define focus return behavior for each interaction. I would write that action where the people doing the work can see it, attach an owner, and define what evidence would change our mind. The point is not to add a ritual. The point is to make a choice that another person can inspect next week. In the fictional example, I would ask the responsible team to show the original record and one counterexample before declaring the issue solved. A presentation can make that step sound neat, while daily work is usually messier. We should preserve that messiness in a source note. If an editor selects a sentence from here, the claim needs this surrounding explanation, because the recommendation is conditional and depends on the observed situation."
+    },
+    {
+      "start_ms": 419692,
+      "end_ms": 461422,
+      "speaker": "Synthetic narrator",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: some browser and assistive-technology combinations differ. That caveat is not a footnote to hide in small print. It sets the boundary of the claim. An honest social post might say that this approach helped the fictional team frame a decision, then invite the reader to check the conditions in their own setting. It should not say the approach guarantees an outcome. If we later find a conflicting record, we will update the transcript and invalidate only the assets that depend on this point. Other approved material can stand if its sources remain unchanged. That is how a careful editorial process can move quickly without making every revision a full restart."
+    },
+    {
+      "start_ms": 461422,
+      "end_ms": 508963,
+      "speaker": "Synthetic narrator",
+      "text": "A participant asks: What assumption tends to survive too long when people discuss error recovery? Let me start with a concrete observation. In digital accessibility, a red border alone is hard to interpret. That sounds ordinary, but it changes what a team should inspect before choosing a remedy. For instance, a required date field failed without an explanation. This is a fictional situation, not a customer result. The useful detail is the sequence: someone made an assumption, the work proceeded, and a later fact exposed the gap. If we reduce the whole episode to an upbeat slogan, we lose the decision the team actually faced. The first question should therefore be what is observable in the source, what remains inferred, and who can verify the missing part. That distinction matters when this recording becomes a newsletter or a short clip."
+    },
+    {
+      "start_ms": 508963,
+      "end_ms": 555215,
+      "speaker": "Synthetic narrator",
+      "text": "Here is the practical move I would make: place clear text errors next to fields and announce changes. I would write that action where the people doing the work can see it, attach an owner, and define what evidence would change our mind. The point is not to add a ritual. The point is to make a choice that another person can inspect next week. In the fictional example, I would ask the responsible team to show the original record and one counterexample before declaring the issue solved. A presentation can make that step sound neat, while daily work is usually messier. We should preserve that messiness in a source note. If an editor selects a sentence from here, the claim needs this surrounding explanation, because the recommendation is conditional and depends on the observed situation."
+    },
+    {
+      "start_ms": 555215,
+      "end_ms": 597410,
+      "speaker": "Synthetic narrator",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: errors should not erase the user's draft. That caveat is not a footnote to hide in small print. It sets the boundary of the claim. An honest social post might say that this approach helped the fictional team frame a decision, then invite the reader to check the conditions in their own setting. It should not say the approach guarantees an outcome. If we later find a conflicting record, we will update the transcript and invalidate only the assets that depend on this point. Other approved material can stand if its sources remain unchanged. That is how a careful editorial process can move quickly without making every revision a full restart."
+    },
+    {
+      "start_ms": 597410,
+      "end_ms": 648043,
+      "speaker": "Synthetic narrator",
+      "text": "A participant asks: How would you explain the tradeoff in correction to a skeptical operator? Let me start with a concrete observation. In digital accessibility, passing one test does not justify a universal claim. That sounds ordinary, but it changes what a team should inspect before choosing a remedy. For instance, the team first said the flow was accessible, then found the mobile review panel trapped focus. This is a fictional situation, not a customer result. The useful detail is the sequence: someone made an assumption, the work proceeded, and a later fact exposed the gap. If we reduce the whole episode to an upbeat slogan, we lose the decision the team actually faced. The first question should therefore be what is observable in the source, what remains inferred, and who can verify the missing part. That distinction matters when this recording becomes a newsletter or a short clip."
+    },
+    {
+      "start_ms": 648043,
+      "end_ms": 693569,
+      "speaker": "Synthetic narrator",
+      "text": "Here is the practical move I would make: narrow the claim and fix the blocked journey. I would write that action where the people doing the work can see it, attach an owner, and define what evidence would change our mind. The point is not to add a ritual. The point is to make a choice that another person can inspect next week. In the fictional example, I would ask the responsible team to show the original record and one counterexample before declaring the issue solved. A presentation can make that step sound neat, while daily work is usually messier. We should preserve that messiness in a source note. If an editor selects a sentence from here, the claim needs this surrounding explanation, because the recommendation is conditional and depends on the observed situation."
+    },
+    {
+      "start_ms": 693569,
+      "end_ms": 754836,
+      "speaker": "Synthetic narrator",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: keep the failed test in the record. That caveat is not a footnote to hide in small print. It sets the boundary of the claim. An honest social post might say that this approach helped the fictional team frame a decision, then invite the reader to check the conditions in their own setting. It should not say the approach guarantees an outcome. If we later find a conflicting record, we will update the transcript and invalidate only the assets that depend on this point. Other approved material can stand if its sources remain unchanged. That is how a careful editorial process can move quickly without making every revision a full restart. I need to correct the stronger wording I used in our first draft of this session. I initially described the example as a measured result. It is a constructed scenario. The corrected version describes the observation and the proposed action, without claiming a measured benefit. Please keep the correction attached if you quote or clip this passage."
+    },
+    {
+      "start_ms": 754836,
+      "end_ms": 804075,
+      "speaker": "Synthetic narrator",
+      "text": "A participant asks: What should a reviewer ask before treating a claim about maintenance as settled? Let me start with a concrete observation. In digital accessibility, a component fix can be undone by a later feature. That sounds ordinary, but it changes what a team should inspect before choosing a remedy. For instance, a new tooltip covered the submit control at narrow width. This is a fictional situation, not a customer result. The useful detail is the sequence: someone made an assumption, the work proceeded, and a later fact exposed the gap. If we reduce the whole episode to an upbeat slogan, we lose the decision the team actually faced. The first question should therefore be what is observable in the source, what remains inferred, and who can verify the missing part. That distinction matters when this recording becomes a newsletter or a short clip."
+    },
+    {
+      "start_ms": 804075,
+      "end_ms": 848872,
+      "speaker": "Synthetic narrator",
+      "text": "Here is the practical move I would make: include accessibility checks in routine review. I would write that action where the people doing the work can see it, attach an owner, and define what evidence would change our mind. The point is not to add a ritual. The point is to make a choice that another person can inspect next week. In the fictional example, I would ask the responsible team to show the original record and one counterexample before declaring the issue solved. A presentation can make that step sound neat, while daily work is usually messier. We should preserve that messiness in a source note. If an editor selects a sentence from here, the claim needs this surrounding explanation, because the recommendation is conditional and depends on the observed situation."
+    },
+    {
+      "start_ms": 848872,
+      "end_ms": 890984,
+      "speaker": "Synthetic narrator",
+      "text": "A follow-up question is what could make this recommendation wrong. My answer is: responsibility cannot sit with a single specialist. That caveat is not a footnote to hide in small print. It sets the boundary of the claim. An honest social post might say that this approach helped the fictional team frame a decision, then invite the reader to check the conditions in their own setting. It should not say the approach guarantees an outcome. If we later find a conflicting record, we will update the transcript and invalidate only the assets that depend on this point. Other approved material can stand if its sources remain unchanged. That is how a careful editorial process can move quickly without making every revision a full restart."
+    },
+    {
+      "start_ms": 890984,
+      "end_ms": 935577,
+      "speaker": "Synthetic narrator",
+      "text": "Let us close by returning to the core proposition: Accessibility improves when real tasks are tested throughout delivery, not only at release. These six examples do not prove that every team will get the same result. They provide a way to ask sharper questions about evidence, ownership, and context. If you turn this talk into an article, keep the scenario label and the caveats visible. If you turn it into a clip, leave enough of the surrounding sentence that a qualification or negation is not cut away. For a carousel, make each slide readable on its own and cite the relevant time range. For a newsletter, invite a reply about what would change the reader's decision. This synthetic presentation ends here; no external audience, customer outcome, or engagement metric is implied."
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "id": "contentstudio_transcribe_generate_v1",
+  "name": "ContentStudio / Transcribe and draft bundle",
+  "nodes": [
+    {
+      "id": "61738749-5fa0-5a5f-b91b-0ff50be74c81",
+      "name": "AI boundary",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -20
+      ],
+      "parameters": {
+        "content": "## Source → transcript → AI bundle\nThe API owns typed transcription and the LangGraph AI task. n8n owns the order, retries, and failure path. No media bytes enter execution JSON.",
+        "height": 180,
+        "width": 540
+      }
+    },
+    {
+      "id": "ebc70809-6e6e-5991-a4aa-3636cd2c1e85",
+      "name": "Accept batch",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        40,
+        220
+      ],
+      "parameters": {
+        "inputSource": "passthrough"
+      }
+    },
+    {
+      "id": "9118bfee-df9b-552d-8b06-84ada40cca75",
+      "name": "Transcribe source",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/transcribe",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 240000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Accept batch').first().json.workspace_id, batch_id: $('Accept batch').first().json.batch_id}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    },
+    {
+      "id": "8046514f-3e2e-554b-8338-d48e7298d033",
+      "name": "Generate review bundle",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        620,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "__API_BASE_URL__/internal/workflows/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 240000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({workspace_id: $('Accept batch').first().json.workspace_id, batch_id: $('Accept batch').first().json.batch_id}) }}"
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "__SERVICE_CREDENTIAL_ID__",
+          "name": "ContentStudio service token"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Accept batch": {
+      "main": [
+        [
+          {
+            "node": "Transcribe source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe source": {
+      "main": [
+        [
+          {
+            "node": "Generate review bundle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": false,
+    "errorWorkflow": "__workflow:error_handler__"
+  },
+  "active": false,
+  "pinData": {}
+}
