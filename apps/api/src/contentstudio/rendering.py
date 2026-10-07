@@ -307,9 +307,10 @@ def render_clip(source_media: Path, clip_range: dict, segments: list[dict], titl
         f"PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=2,Shadow=0,"
         f"MarginV=25,Alignment=2',format=yuv420p[video]"
     )
-    command = [ffmpeg, "-hide_banner", "-loglevel", "error", "-y", *inputs,
+    threads = str(get_settings().media_render_threads)
+    command = [ffmpeg, "-hide_banner", "-loglevel", "error", "-y", "-filter_complex_threads", threads, *inputs,
                "-filter_complex", filter_graph, "-map", "[video]", "-map", audio_map,
-               "-t", f"{duration_s:.3f}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
+               "-t", f"{duration_s:.3f}", "-c:v", "libx264", "-threads", threads, "-preset", "veryfast", "-crf", "23",
                "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(temp_path)]
     try:
         result = subprocess.run(command, cwd=output_dir, capture_output=True, text=True, timeout=240)

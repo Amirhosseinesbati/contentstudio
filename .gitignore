@@ -24,3 +24,10 @@ apps/api/data/
 
 # Local product brief; excluded from the public portfolio repository.
 /09-n8n-contentstudio.md
+
+# Private local publication receipts
+**/library-files.json
+**/library-status.json
+**/library-manifest.json
+**/library-writeback.json
+**/upload-manifest.json

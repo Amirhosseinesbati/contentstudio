@@ -1,6 +1,6 @@
 # Fixture validation
 
-Run UTC: 2026-09-27T21:01:52.428346+00:00
+Run UTC: 2026-10-06T17:10:47.208008+00:00
 
 These are synthetic planted cases. The measure is whether the expected deterministic warning appeared; it does not measure model quality or semantic truth.
 

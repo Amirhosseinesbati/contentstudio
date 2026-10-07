@@ -1,0 +1,25 @@
+{
+  "scope": "Local synthetic fixture preview; four representative images from the 22-image verified rollout. No live provider validation.",
+  "files": [
+    {
+      "file": "dark-studio-1440.png",
+      "bytes": 157033,
+      "sha256": "b20290c952ece9020e1a88cb30893d7b9ef6ffd32f8e4e73aa6bf8ec182690c2"
+    },
+    {
+      "file": "dark-studio-390.png",
+      "bytes": 70827,
+      "sha256": "3e01cfcdd6e20fc99cb99d1f34d77d917f9c5dfbd987a8e4cebed8f224a68358"
+    },
+    {
+      "file": "light-studio-1440.png",
+      "bytes": 156760,
+      "sha256": "1617f3c8647e9829c862b81145418a691f7a0da65e923129b931d0a13873c7ad"
+    },
+    {
+      "file": "light-studio-390.png",
+      "bytes": 69707,
+      "sha256": "23c1c423cd530b88de7f2e7257e8b999859913231670ae2ce033183786f40aaa"
+    }
+  ]
+}

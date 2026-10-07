@@ -43,6 +43,7 @@ from contentstudio.service import (
     invalidate_batch_package,
     package_file_name,
     package_result_path,
+    render_file_paths,
 )
 
 
@@ -823,7 +824,7 @@ def test_fresh_demo_seed_prepares_real_scoped_showcase_files_once(tmp_path: Path
             assert calls == {"carousel": 1, "clip": 3}
             assert db.get(ContentBatch, batch.id).status == "complete"
             clip = next(asset for asset in showcase_assets if asset.asset_type == "clip")
-            (tmp_path / "output" / batch.workspace_id / batch.id / clip.id / "clip.mp4").unlink()
+            render_file_paths(clip)[0].unlink()
             seed_demo(db)
             assert calls == {"carousel": 1, "clip": 4}
             assert db.get(ContentBatch, batch.id).status == "complete"
@@ -1056,14 +1057,30 @@ def test_scheduled_newsletter_becomes_local_outbox_without_sending(client: TestC
 def test_source_correction_revokes_old_render_and_package_urls(client: TestClient):
     source, bundle, payload = make_bundle(client)
     carousel = next(a for a in bundle["assets"] if a["asset_type"] == "carousel")
+    edited = client.patch(f"/api/v1/assets/{carousel['id']}", json={
+        "slides": (carousel["slides"] * 4)[:6],
+    })
+    assert edited.status_code == 200, edited.text
+    carousel = edited.json()
     root = get_settings().media_root.resolve() / payload["workspace_id"] / bundle["batch"]["id"]
     rendered = root / carousel["id"] / "slide-01.png"
     rendered.parent.mkdir(parents=True, exist_ok=True)
     rendered.write_bytes(b"fake-image-for-access-check")
+    approved = client.post(
+        f"/api/v1/assets/{carousel['id']}/review",
+        json={"decision": "approve", "expected_hash": carousel["content_hash"]},
+    )
+    assert approved.status_code == 200, approved.text
+    png_urls = []
+    for index in range(len(carousel["slides"])):
+        filename = f"slide-{index + 1:02d}.png"
+        (rendered.parent / filename).write_bytes(b"fake-image-for-access-check")
+        png_urls.append(f"/api/v1/assets/{carousel['id']}/renders/{filename}")
+    (rendered.parent / "carousel.pdf").write_bytes(b"fake-pdf-for-access-check")
     with session_factory()() as db:
         asset = db.get(ContentAssetVersion, carousel["id"])
         asset.status = "rendered"
-        asset.render_urls_json = {"png": [f"/api/v1/assets/{asset.id}/renders/slide-01.png"], "pdf": None, "mp4": None}
+        asset.render_urls_json = {"png": png_urls, "pdf": f"/api/v1/assets/{asset.id}/renders/carousel.pdf", "mp4": None}
         db.commit()
     package_response = client.post(
         "/internal/workflows/package",

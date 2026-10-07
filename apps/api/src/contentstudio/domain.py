@@ -37,7 +37,8 @@ def content_hash(
 
 
 def validate_asset(
-    asset: dict, segments: Iterable[dict], prohibited_phrases: list[str] | None = None
+    asset: dict, segments: Iterable[dict], prohibited_phrases: list[str] | None = None,
+    max_social_chars: int = 500,
 ) -> list[str]:
     """Check cited spans; deterministic evidence checks cannot establish overall truth."""
     segment_list = list(segments)
@@ -122,15 +123,22 @@ def validate_asset(
                 if len(segment_list) >= 2 and _paragraph_count(body) < 2:
                     warnings.append(f"{label} body needs at least two paragraphs")
             else:
-                if len(body.strip()) > 500:
-                    warnings.append("Social post exceeds 500 characters")
+                limit = min(500, max_social_chars)
+                if len(body.strip()) > limit:
+                    warnings.append(f"Social post exceeds {limit} characters")
                 if words > 100:
                     warnings.append("Social post exceeds 100 words")
     if asset.get("asset_type") == "clip":
         clip = asset.get("clip_range") or {}
+        if not isinstance(clip, dict):
+            return [*warnings, "Clip range must be an object"]
         start, end = clip.get("start_ms", -1), clip.get("end_ms", -1)
+        if type(start) is not int or type(end) is not int:
+            return [*warnings, "Clip range must contain integer timestamps"]
         if start < 0 or end <= start or not 20_000 <= end - start <= 60_000:
-            warnings.append("Clip must be 20–60 seconds with a valid range")
+            warnings.append("Clip must be 20-60 seconds with a valid range")
+        if clip.get("aspect_ratio", "9:16") not in ("9:16", "1:1", "16:9"):
+            warnings.append("Clip aspect ratio must be 9:16, 1:1, or 16:9")
         overlapping = [
             s
             for s in segment_list

@@ -56,6 +56,8 @@ export const api = {
   sources: () => request<ApiResponse<'/api/v1/sources', 'get'>>('/sources'),
   source: (id: string) => request<ApiResponse<'/api/v1/sources/{source_id}', 'get'>>(`/sources/${encodeURIComponent(id)}`),
   brands: () => request<ApiResponse<'/api/v1/brands', 'get'>>('/brands'),
+  createBrand: (payload: ApiRequest<'/api/v1/brands', 'post'>) => request<ApiResponse<'/api/v1/brands', 'post'>>('/brands', { method: 'POST', body: json(payload) }),
+  reviseBrand: (id: string, payload: ApiRequest<'/api/v1/brands/{brand_id}', 'put'>) => request<ApiResponse<'/api/v1/brands/{brand_id}', 'put'>>(`/brands/${encodeURIComponent(id)}`, { method: 'PUT', body: json(payload) }),
   batches: () => request<ApiResponse<'/api/v1/batches', 'get'>>('/batches'),
   batch: (id: string) => request<ApiResponse<'/api/v1/batches/{batch_id}', 'get'>>(`/batches/${encodeURIComponent(id)}`),
   calendar: () => request<ApiResponse<'/api/v1/calendar', 'get'>>('/calendar'),
@@ -68,11 +70,11 @@ export const api = {
   },
   createTranscriptSource: (title: string, segments: Pick<Segment, 'start_ms' | 'end_ms' | 'speaker' | 'text'>[]) =>
     request<ApiResponse<'/api/v1/sources/transcript', 'post'>>('/sources/transcript', { method: 'POST', body: json({ title, rights_attested: true, segments } satisfies ApiRequest<'/api/v1/sources/transcript', 'post'>) }),
-  correctSegment: (sourceId: string, segmentId: string, text: string) =>
-    request<ApiResponse<'/api/v1/sources/{source_id}/segments/{segment_id}', 'patch'>>(`/sources/${encodeURIComponent(sourceId)}/segments/${encodeURIComponent(segmentId)}`, { method: 'PATCH', body: json({ text } satisfies ApiRequest<'/api/v1/sources/{source_id}/segments/{segment_id}', 'patch'>) }),
+  correctSegment: (sourceId: string, segmentId: string, text: string, expectedTranscriptId?: string) =>
+    request<ApiResponse<'/api/v1/sources/{source_id}/segments/{segment_id}', 'patch'>>(`/sources/${encodeURIComponent(sourceId)}/segments/${encodeURIComponent(segmentId)}`, { method: 'PATCH', body: json({ text, expected_transcript_id: expectedTranscriptId } satisfies ApiRequest<'/api/v1/sources/{source_id}/segments/{segment_id}', 'patch'>) }),
   createBatch: (sourceId: string, brandProfileId: string) =>
     request<ApiResponse<'/api/v1/sources/{source_id}/batches', 'post'>>(`/sources/${encodeURIComponent(sourceId)}/batches`, { method: 'POST', body: json({ brand_profile_id: brandProfileId } satisfies ApiRequest<'/api/v1/sources/{source_id}/batches', 'post'>) }),
-  editAsset: (id: string, changes: Partial<Pick<ContentAsset, 'title' | 'text' | 'slides' | 'clip_range'>>) =>
+  editAsset: (id: string, changes: Partial<Pick<ContentAsset, 'title' | 'text' | 'slides' | 'clip_range' | 'source_segment_ids'>> & { expected_hash?: string }) =>
     request<ApiResponse<'/api/v1/assets/{asset_id}', 'patch'>>(`/assets/${encodeURIComponent(id)}`, { method: 'PATCH', body: json(changes satisfies ApiRequest<'/api/v1/assets/{asset_id}', 'patch'>) }),
   reviewAsset: (id: string, decision: 'approve' | 'reject', expectedHash: string, reason?: string) =>
     request<ApiResponse<'/api/v1/assets/{asset_id}/review', 'post'>>(`/assets/${encodeURIComponent(id)}/review`, { method: 'POST', body: json({ decision, expected_hash: expectedHash, reason } satisfies ApiRequest<'/api/v1/assets/{asset_id}/review', 'post'>) }),
@@ -82,6 +84,7 @@ export const api = {
   scheduleAsset: (id: string, channel: 'wordpress' | 'newsletter' | 'social', scheduledAt: string | null) =>
     request<ApiResponse<'/api/v1/assets/{asset_id}/schedule', 'post'>>(`/assets/${encodeURIComponent(id)}/schedule`, { method: 'POST', body: json({ channel, scheduled_at: scheduledAt } satisfies ApiRequest<'/api/v1/assets/{asset_id}/schedule', 'post'>) }),
   job: (id: string) => request<ApiResponse<'/api/v1/jobs/{job_id}', 'get'>>(`/jobs/${encodeURIComponent(id)}`),
+  jobs: (batchId: string) => request<ApiResponse<'/api/v1/jobs', 'get'>>(`/jobs?batch_id=${encodeURIComponent(batchId)}`),
   jobEventsUrl: (id: string) => apiUrl(`/api/v1/jobs/${encodeURIComponent(id)}/events`),
   downloadUrl: (id: string) => apiUrl(`/api/v1/batches/${encodeURIComponent(id)}/download`),
 }

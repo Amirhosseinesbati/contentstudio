@@ -1,8 +1,8 @@
 // Generated from apps/api/openapi.json. Do not edit by hand.
-// SHA256: c90d812f7797ac96953cb780bf04fc077587f9b69f2b68de5607cf92fcffa669
+// SHA256: 61aaf8722f4655d335936bdd2e893e4f794d0b420a84cc4ba96f81db6f3ef687
 export interface components {
   schemas: {
-    "AssetEditInput": { "title"?: (string | null); "text"?: (string | null); "slides"?: (Array<Record<string, unknown>> | null); "clip_range"?: (Record<string, unknown> | null) }
+    "AssetEditInput": { "title"?: (string | null); "text"?: (string | null); "slides"?: (Array<Record<string, unknown>> | null); "clip_range"?: (Record<string, unknown> | null); "source_segment_ids"?: (Array<string> | null); "expected_hash"?: (string | null) }
     "AssetOut": { "id": string; "logical_asset_id": string; "batch_id": string; "asset_type": string; "title": string; "text": string; "status": string; "version": number; "content_hash": string; "source_segment_ids": Array<string>; "warnings": Array<string>; "slides": Array<Record<string, unknown>>; "clip_range": (Record<string, unknown> | null); "evidence_map": Array<components["schemas"]["EvidenceEntryOut"]>; "render_urls": components["schemas"]["RenderUrlsOut"] }
     "AuthOut": { "user": components["schemas"]["UserOut"]; "mode": string }
     "BatchDetailOut": { "batch": components["schemas"]["BatchOut"]; "source": components["schemas"]["SourceOut"]; "claims": Array<components["schemas"]["ClaimOut"]>; "assets": Array<components["schemas"]["AssetOut"]> }
@@ -12,7 +12,10 @@ export interface components {
     "BatchesOut": { "items": Array<components["schemas"]["BatchOut"]> }
     "Body_upload_source_api_v1_sources_upload_post": { "file": string; "title": string; "rights_attested": boolean }
     "BootstrapOut": { "mode": string; "synthetic_demo_dataset": boolean; "workspace": components["schemas"]["WorkspaceOut"]; "user": components["schemas"]["UserOut"]; "stats": Record<string, number>; "connection": Record<string, string> }
+    "BrandCreateInput": { "name": string; "tone": string; "rules"?: components["schemas"]["BrandRulesInput"] }
     "BrandOut": { "id": string; "name": string; "version": number; "tone": string; "rules": Record<string, unknown> }
+    "BrandRevisionInput": { "tone": string; "rules": components["schemas"]["BrandRulesInput"] }
+    "BrandRulesInput": { "accent"?: string; "prohibited_phrases"?: Array<string>; "max_social_chars"?: number }
     "BrandsOut": { "items": Array<components["schemas"]["BrandOut"]> }
     "CalendarEntryOut": { "id": string; "asset_version_id": string; "batch_id": string; "channel": string; "status": string; "scheduled_at": (string | null); "title": string }
     "CalendarOut": { "items": Array<components["schemas"]["CalendarEntryOut"]> }
@@ -22,7 +25,8 @@ export interface components {
     "EvidenceEntryOut": { "text": string; "source_segment_ids": Array<string>; "match": "verbatim" }
     "HTTPValidationError": { "detail"?: Array<components["schemas"]["ValidationError"]> }
     "IntakeInput": { "workspace_id": string; "source_asset_id": string; "recipe_version"?: string; "brand_profile_version_id": string; "request_id": string }
-    "JobOut": { "id": string; "job_id": string; "kind": string; "status": string; "progress": number; "error": (string | null); "result": Record<string, unknown> }
+    "JobOut": { "id": string; "job_id": string; "kind": string; "status": string; "progress": number; "error": (string | null); "result": Record<string, unknown>; "batch_id": (string | null); "asset_version_id": (string | null); "updated_at": string }
+    "JobsOut": { "items": Array<components["schemas"]["JobOut"]> }
     "LoginInput": { "email": string; "password": string }
     "OutboxInput": { "workspace_id": string; "asset_version_id": string; "channel": "newsletter" | "social"; "operation_key": string }
     "RenderStepInput": { "workspace_id": string; "asset_version_id": string }
@@ -30,10 +34,10 @@ export interface components {
     "ReviewInput": { "decision": "approve" | "reject"; "expected_hash": string; "reason"?: (string | null) }
     "ScheduleInput": { "scheduled_at"?: (string | null); "channel"?: "wordpress" | "newsletter" | "social" }
     "ScheduledOut": { "id": string; "asset_version_id": string; "channel": string; "status": string; "scheduled_at": (string | null) }
-    "SegmentCorrectionInput": { "text": string }
+    "SegmentCorrectionInput": { "text": string; "expected_transcript_id"?: (string | null) }
     "SegmentInput": { "start_ms": number; "end_ms": number; "speaker"?: (string | null); "text": string }
     "SegmentOut": { "id": string; "start_ms": number; "end_ms": number; "speaker": (string | null); "text": string }
-    "SourceDetailOut": { "source": components["schemas"]["SourceOut"]; "transcript": (components["schemas"]["TranscriptOut"] | null); "media_url": (string | null) }
+    "SourceDetailOut": { "source": components["schemas"]["SourceOut"]; "transcript": (components["schemas"]["TranscriptOut"] | null); "media_url": (string | null); "media_status": "available" | "missing" | "transcript_only" }
     "SourceOut": { "id": string; "title": string; "kind": string; "mime_type": (string | null); "duration_ms": number; "rights_status": string; "created_at": string; "latest_transcript_version_id": (string | null); "batch_count": number }
     "SourcesOut": { "items": Array<components["schemas"]["SourceOut"]> }
     "TranscriptOut": { "id": string; "version": number; "provenance": string; "segments": Array<components["schemas"]["SegmentOut"]> }
@@ -54,6 +58,9 @@ export interface paths {
   }
   "/api/v1/assets/{asset_id}/render": {
     post: { request: unknown; response: components["schemas"]["JobOut"] }
+  }
+  "/api/v1/assets/{asset_id}/renders/{attempt_id}/{filename}": {
+    get: { request: unknown; response: unknown }
   }
   "/api/v1/assets/{asset_id}/renders/{filename}": {
     get: { request: unknown; response: unknown }
@@ -90,9 +97,16 @@ export interface paths {
   }
   "/api/v1/brands": {
     get: { request: unknown; response: components["schemas"]["BrandsOut"] }
+    post: { request: components["schemas"]["BrandCreateInput"]; response: components["schemas"]["BrandOut"] }
+  }
+  "/api/v1/brands/{brand_id}": {
+    put: { request: components["schemas"]["BrandRevisionInput"]; response: components["schemas"]["BrandOut"] }
   }
   "/api/v1/calendar": {
     get: { request: unknown; response: components["schemas"]["CalendarOut"] }
+  }
+  "/api/v1/jobs": {
+    get: { request: unknown; response: components["schemas"]["JobsOut"] }
   }
   "/api/v1/jobs/{job_id}": {
     get: { request: unknown; response: components["schemas"]["JobOut"] }
@@ -128,6 +142,9 @@ export interface paths {
     get: { request: unknown; response: unknown }
   }
   "/internal/workflows/demo-fixtures": {
+    get: { request: unknown; response: unknown }
+  }
+  "/internal/workflows/demo-scenario-status": {
     get: { request: unknown; response: unknown }
   }
   "/internal/workflows/dispatch/complete": {

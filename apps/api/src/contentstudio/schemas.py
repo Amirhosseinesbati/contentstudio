@@ -1,6 +1,34 @@
 from typing import Literal
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+
+
+class BrandRulesInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    accent: str = Field(default="#D26634", pattern=r"^#[0-9a-fA-F]{6}$")
+    prohibited_phrases: list[str] = Field(default_factory=list, max_length=50)
+    max_social_chars: int = Field(default=500, ge=80, le=500)
+
+    @field_validator("prohibited_phrases")
+    @classmethod
+    def phrases(cls, values):
+        cleaned = [value.strip() for value in values]
+        if any(not value or len(value) > 120 for value in cleaned):
+            raise ValueError("Brand phrases must contain 1-120 characters")
+        return list(dict.fromkeys(cleaned))
+
+
+class BrandCreateInput(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+    name: str = Field(min_length=2, max_length=45)
+    tone: str = Field(min_length=2, max_length=300)
+    rules: BrandRulesInput = Field(default_factory=BrandRulesInput)
+
+
+class BrandRevisionInput(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+    tone: str = Field(min_length=2, max_length=300)
+    rules: BrandRulesInput
 
 
 class LoginInput(BaseModel):
@@ -9,6 +37,7 @@ class LoginInput(BaseModel):
 
 
 class SegmentInput(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
     start_ms: int = Field(ge=0)
     end_ms: int = Field(gt=0)
     speaker: str | None = Field(default=None, max_length=100)
@@ -22,13 +51,16 @@ class SegmentInput(BaseModel):
 
 
 class TranscriptSourceInput(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
     title: str = Field(min_length=2, max_length=250)
     rights_attested: bool
     segments: list[SegmentInput] = Field(min_length=1, max_length=5000)
 
 
 class SegmentCorrectionInput(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
     text: str = Field(min_length=1, max_length=10000)
+    expected_transcript_id: str | None = None
 
 
 class BatchInput(BaseModel):
@@ -37,14 +69,17 @@ class BatchInput(BaseModel):
 
 
 class AssetEditInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     title: str | None = Field(default=None, min_length=1, max_length=250)
     text: str | None = Field(default=None, max_length=40000)
     slides: list[dict] | None = None
     clip_range: dict | None = None
+    source_segment_ids: list[str] | None = Field(default=None, max_length=5000)
+    expected_hash: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
 
     @model_validator(mode="after")
     def one_field(self):
-        if all(v is None for v in (self.title, self.text, self.slides, self.clip_range)):
+        if all(v is None for v in (self.title, self.text, self.slides, self.clip_range, self.source_segment_ids)):
             raise ValueError("At least one field is required")
         return self
 
@@ -164,6 +199,7 @@ class SourceDetailOut(BaseModel):
     source: SourceOut
     transcript: TranscriptOut | None
     media_url: str | None
+    media_status: Literal["available", "missing", "transcript_only"]
 
 
 class SourcesOut(BaseModel):
@@ -250,6 +286,13 @@ class JobOut(BaseModel):
     progress: int
     error: str | None
     result: dict
+    batch_id: str | None
+    asset_version_id: str | None
+    updated_at: str
+
+
+class JobsOut(BaseModel):
+    items: list[JobOut]
 
 
 class CalendarEntryOut(BaseModel):

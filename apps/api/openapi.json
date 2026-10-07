@@ -339,6 +339,91 @@
             }
           }
         }
+      },
+      "post": {
+        "summary": "Create Brand",
+        "operationId": "create_brand_api_v1_brands_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrandCreateInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrandOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/brands/{brand_id}": {
+      "put": {
+        "summary": "Revise Brand",
+        "operationId": "revise_brand_api_v1_brands__brand_id__put",
+        "parameters": [
+          {
+            "name": "brand_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Brand Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrandRevisionInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrandOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/sources/{source_id}/batches": {
@@ -645,6 +730,22 @@
               "type": "string",
               "title": "Filename"
             }
+          },
+          {
+            "name": "attempt_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Attempt Id"
+            }
           }
         ],
         "responses": {
@@ -653,6 +754,126 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/assets/{asset_id}/renders/{attempt_id}/{filename}": {
+      "get": {
+        "summary": "Rendered File",
+        "operationId": "rendered_file_api_v1_assets__asset_id__renders__attempt_id___filename__get",
+        "parameters": [
+          {
+            "name": "asset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Asset Id"
+            }
+          },
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Filename"
+            }
+          },
+          {
+            "name": "attempt_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Attempt Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/jobs": {
+      "get": {
+        "summary": "Jobs",
+        "operationId": "jobs_api_v1_jobs_get",
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Batch Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsOut"
+                }
               }
             }
           },
@@ -953,6 +1174,53 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/workflows/demo-scenario-status": {
+      "get": {
+        "summary": "Demo Scenario Status",
+        "description": "Expose only persisted demo metadata for triggered workflow acceptance.",
+        "operationId": "demo_scenario_status_internal_workflows_demo_scenario_status_get",
+        "parameters": [
+          {
+            "name": "workspace_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Workspace Id"
+            }
+          },
+          {
+            "name": "request_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1461,8 +1729,36 @@
               }
             ],
             "title": "Clip Range"
+          },
+          "source_segment_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Segment Ids"
+          },
+          "expected_hash": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Hash"
           }
         },
+        "additionalProperties": false,
         "type": "object",
         "title": "AssetEditInput"
       },
@@ -1805,6 +2101,32 @@
         ],
         "title": "BootstrapOut"
       },
+      "BrandCreateInput": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 45,
+            "minLength": 2,
+            "title": "Name"
+          },
+          "tone": {
+            "type": "string",
+            "maxLength": 300,
+            "minLength": 2,
+            "title": "Tone"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/BrandRulesInput"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "tone"
+        ],
+        "title": "BrandCreateInput"
+      },
       "BrandOut": {
         "properties": {
           "id": {
@@ -1838,6 +2160,54 @@
           "rules"
         ],
         "title": "BrandOut"
+      },
+      "BrandRevisionInput": {
+        "properties": {
+          "tone": {
+            "type": "string",
+            "maxLength": 300,
+            "minLength": 2,
+            "title": "Tone"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/BrandRulesInput"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tone",
+          "rules"
+        ],
+        "title": "BrandRevisionInput"
+      },
+      "BrandRulesInput": {
+        "properties": {
+          "accent": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$",
+            "title": "Accent",
+            "default": "#D26634"
+          },
+          "prohibited_phrases": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Prohibited Phrases"
+          },
+          "max_social_chars": {
+            "type": "integer",
+            "maximum": 500.0,
+            "minimum": 80.0,
+            "title": "Max Social Chars",
+            "default": 500
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "BrandRulesInput"
       },
       "BrandsOut": {
         "properties": {
@@ -2127,6 +2497,32 @@
             "additionalProperties": true,
             "type": "object",
             "title": "Result"
+          },
+          "batch_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Batch Id"
+          },
+          "asset_version_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Asset Version Id"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
           }
         },
         "type": "object",
@@ -2137,9 +2533,28 @@
           "status",
           "progress",
           "error",
-          "result"
+          "result",
+          "batch_id",
+          "asset_version_id",
+          "updated_at"
         ],
         "title": "JobOut"
+      },
+      "JobsOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/JobOut"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "JobsOut"
       },
       "LoginInput": {
         "properties": {
@@ -2361,8 +2776,20 @@
             "maxLength": 10000,
             "minLength": 1,
             "title": "Text"
+          },
+          "expected_transcript_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Transcript Id"
           }
         },
+        "additionalProperties": false,
         "type": "object",
         "required": [
           "text"
@@ -2473,13 +2900,23 @@
               }
             ],
             "title": "Media Url"
+          },
+          "media_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "missing",
+              "transcript_only"
+            ],
+            "title": "Media Status"
           }
         },
         "type": "object",
         "required": [
           "source",
           "transcript",
-          "media_url"
+          "media_url",
+          "media_status"
         ],
         "title": "SourceDetailOut"
       },

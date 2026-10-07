@@ -1,5 +1,6 @@
 """Service-token API for n8n workflow steps. These endpoints do not own branching."""
 
+import hashlib
 import html
 import json
 import re
@@ -55,6 +56,7 @@ from .service import (
     latest_transcript,
     package_file_name,
     package_operation_key,
+    render_file_paths,
     render_operation_key,
     scoped,
     segment_data,
@@ -349,7 +351,7 @@ def _job_for(
 
 @router.post("/render")
 def render(payload: RenderStepInput, db: Session = Depends(get_db)):
-    from .rendering import render_carousel, render_clip
+    from .rendering import RendererUnavailable, RenderValidationError, render_carousel, render_clip
 
     asset = must_get(db, ContentAssetVersion, payload.asset_version_id, payload.workspace_id)
     if not asset.is_current or asset.status not in ("approved", "rendered"):
@@ -379,26 +381,34 @@ def render(payload: RenderStepInput, db: Session = Depends(get_db)):
     source = must_get(db, SourceAsset, batch.source_asset_id, payload.workspace_id)
     transcript = latest_transcript(db, source)
     segments = [segment_data(s) for s in transcript_segments(db, transcript)] if transcript else []
-    output_dir = get_settings().media_root.resolve() / payload.workspace_id / batch.id / asset.id
+    output_dir = get_settings().media_root.resolve() / payload.workspace_id / batch.id / asset.id / lease_token
     output_dir.mkdir(parents=True, exist_ok=True)
     try:
         if asset.asset_type == "carousel":
             result = render_carousel(asset.slides_json, asset.title, output_dir, brand=brand_data(pinned_brand))
             urls = {
                 "png": [
-                    f"/api/v1/assets/{asset.id}/renders/{Path(path).name}"
+                    f"/api/v1/assets/{asset.id}/renders/{lease_token}/{Path(path).name}"
                     for path in result["png_paths"]
                 ],
-                "pdf": f"/api/v1/assets/{asset.id}/renders/{Path(result['pdf_path']).name}",
+                "pdf": f"/api/v1/assets/{asset.id}/renders/{lease_token}/{Path(result['pdf_path']).name}",
                 "mp4": None,
             }
         else:
             if not source.media_path:
                 raise ValueError("Transcript-only source has no playable media for clip rendering")
+            if source.duration_ms > 0 and asset.clip_range_json.get("end_ms", 0) > source.duration_ms:
+                raise ValueError("Clip range exceeds the owned recording duration")
             media = Path(source.media_path).resolve()
             media_root = (get_settings().media_root.resolve() / payload.workspace_id).resolve()
             if not media.is_relative_to(media_root) or not media.is_file():
                 raise FileNotFoundError("Workspace media is unavailable")
+            digest = hashlib.sha256()
+            with media.open("rb") as stream:
+                while chunk := stream.read(1024 * 1024):
+                    digest.update(chunk)
+            if digest.hexdigest() != source.sha256:
+                raise ValueError("Owned recording bytes changed; restore the original source before rendering")
             result = render_clip(
                 media,
                 asset.clip_range_json,
@@ -411,11 +421,8 @@ def render(payload: RenderStepInput, db: Session = Depends(get_db)):
             urls = {
                 "png": [],
                 "pdf": None,
-                "mp4": f"/api/v1/assets/{asset.id}/renders/{Path(result['mp4_path']).name}",
+                "mp4": f"/api/v1/assets/{asset.id}/renders/{lease_token}/{Path(result['mp4_path']).name}",
             }
-        asset.render_urls_json = urls
-        asset.status = "rendered"
-        invalidate_batch_package(db, payload.workspace_id, batch.id)
         result = db.execute(
             update(Job)
             .where(Job.id == job.id, Job.status == "running", Job.lease_token == lease_token)
@@ -424,6 +431,16 @@ def render(payload: RenderStepInput, db: Session = Depends(get_db)):
         if result.rowcount != 1:
             db.rollback()
             raise HTTPException(409, "Render job lease was taken by another worker")
+        current = db.execute(update(ContentAssetVersion).where(
+            ContentAssetVersion.id == asset.id,
+            ContentAssetVersion.is_current.is_(True),
+            ContentAssetVersion.status.in_(["approved", "rendered"]),
+            ContentAssetVersion.content_hash == asset.content_hash,
+        ).values(status="rendered", render_urls_json=urls))
+        if current.rowcount != 1:
+            db.rollback()
+            raise HTTPException(409, "Asset changed while rendering; review the current version")
+        invalidate_batch_package(db, payload.workspace_id, batch.id)
         db.commit()
     except HTTPException:
         raise
@@ -436,7 +453,8 @@ def render(payload: RenderStepInput, db: Session = Depends(get_db)):
             .values(status="failed", error=error_message)
         )
         db.commit()
-        raise HTTPException(500, error_message) from error
+        code = 503 if isinstance(error, RendererUnavailable) else 422 if isinstance(error, RenderValidationError) else 409 if isinstance(error, (ValueError, FileNotFoundError)) else 500
+        raise HTTPException(code, error_message) from error
     return {"job_id": job.id, "status": "complete", "render_urls": urls}
 
 
@@ -450,6 +468,22 @@ def package(payload: BatchStepInput, db: Session = Depends(get_db)):
     ]
     if not assets:
         raise HTTPException(409, "No approved assets to package")
+    approvals = {decision.asset_version_id: decision for decision in db.scalars(
+        select(ReviewDecision).where(ReviewDecision.workspace_id == payload.workspace_id,
+                                     ReviewDecision.asset_version_id.in_([a.id for a in assets]),
+                                     ReviewDecision.decision == "approve")
+    )}
+    for asset in assets:
+        decision = approvals.get(asset.id)
+        if not decision or decision.expected_hash != asset.content_hash or asset.warnings_json:
+            raise HTTPException(409, "Every packaged asset needs exact version approval without warnings")
+        if asset.asset_type in ("carousel", "clip"):
+            if asset.status != "rendered":
+                raise HTTPException(409, "Render approved media before creating a publication package")
+            try:
+                render_file_paths(asset)
+            except (OSError, ValueError) as error:
+                raise HTTPException(409, str(error)) from error
     job = _job_for(db, payload.workspace_id, "package", batch_id=batch.id)
     if job.status == "complete":
         return {
@@ -470,37 +504,43 @@ def package(payload: BatchStepInput, db: Session = Depends(get_db)):
     try:
         manifest = {
             "product": "ContentStudio",
+            "schema_version": 2,
             "synthetic_demo_dataset": get_settings().mode == "demo",
+            "brand": brand_data(must_get(db, BrandProfileVersion, batch.brand_profile_version_id, payload.workspace_id)),
+            "batch": {"id": batch.id, "recipe_version": batch.recipe_version,
+                      "generation_transcript_version_id": batch.transcript_version_id},
             "source": {
                 "id": source.id,
                 "title": source.title,
                 "rights_status": source.rights_status,
                 "transcript_provenance": transcript.provenance if transcript else None,
+                "transcript_version_id": transcript.id if transcript else None,
+                "sha256": source.sha256,
             },
             "assets": [asset_data(a, segments) for a in assets],
+            "approvals": [{"asset_version_id": a.id, "content_hash": a.content_hash,
+                           "reviewer_id": approvals[a.id].user_id,
+                           "decision": "approve"} for a in assets],
             "source_map": segments,
+            "files": [],
         }
         with zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-            archive.writestr("manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2))
             for asset in assets:
-                archive.writestr(
-                    f"assets/{asset.asset_type}-{asset.id[:8]}.md",
-                    f"# {asset.title}\n\n{asset.text}\n",
-                )
-                for url in sum(
-                    [
-                        asset.render_urls_json.get("png", []),
-                        [asset.render_urls_json.get("pdf")],
-                        [asset.render_urls_json.get("mp4")],
-                    ],
-                    [],
-                ):
-                    if not url:
-                        continue
-                    filename = Path(url).name
-                    path = root / asset.id / filename
-                    if path.is_file():
-                        archive.write(path, f"renders/{asset.id[:8]}/{filename}")
+                name = f"assets/{asset.asset_type}-{asset.id[:8]}.md"
+                text_bytes = f"# {asset.title}\n\n{asset.text}\n".encode()
+                archive.writestr(name, text_bytes)
+                manifest["files"].append({"path": name, "sha256": hashlib.sha256(text_bytes).hexdigest(), "bytes": len(text_bytes)})
+                for path in render_file_paths(asset):
+                    name = f"renders/{asset.id[:8]}/{path.name}"
+                    digest = hashlib.sha256()
+                    byte_count = 0
+                    with path.open("rb") as stream, archive.open(name, "w") as output:
+                        while chunk := stream.read(1024 * 1024):
+                            digest.update(chunk)
+                            byte_count += len(chunk)
+                            output.write(chunk)
+                    manifest["files"].append({"path": name, "sha256": digest.hexdigest(), "bytes": byte_count})
+            archive.writestr("manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2))
         temporary.replace(destination)
         download_url = f"/api/v1/batches/{batch.id}/download"
         result = db.execute(

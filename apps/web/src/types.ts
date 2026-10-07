@@ -49,6 +49,7 @@ export interface SourceDetail {
   source: SourceAsset
   transcript: TranscriptVersion | null
   media_url: string | null
+  media_status?: 'available' | 'missing' | 'transcript_only'
 }
 
 export interface BrandProfile {
@@ -64,6 +65,7 @@ export interface BatchSummary {
   source_id?: string
   source_asset_id?: string
   brand_profile_id?: string
+  brand_profile_version_id?: string
   status: string
   created_at: string
   updated_at?: string

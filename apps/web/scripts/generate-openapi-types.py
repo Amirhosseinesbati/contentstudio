@@ -98,7 +98,7 @@ def main() -> None:
             raise SystemExit("OpenAPI types are stale. Run python scripts/generate-openapi-types.py")
         print("OpenAPI response/request types match apps/api/openapi.json")
         return
-    OUTPUT_PATH.write_text(generated, encoding="utf-8")
+    OUTPUT_PATH.write_text(generated, encoding="utf-8", newline="\n")
     print(f"Generated {OUTPUT_PATH.relative_to(WEB_ROOT)} from {SPEC_PATH}")
 
 

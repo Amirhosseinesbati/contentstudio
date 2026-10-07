@@ -31,6 +31,7 @@ from .service import (
     generate_for_batch,
     latest_transcript,
     package_result_path,
+    render_file_paths,
     transcript_segments,
 )
 
@@ -40,30 +41,11 @@ def fixed_id(kind: str, key: str) -> str:
 
 
 def _render_files_available(asset: ContentAssetVersion) -> bool:
-    root = (
-        get_settings().media_root.resolve()
-        / asset.workspace_id
-        / asset.batch_id
-        / asset.id
-    ).resolve()
-    prefix = f"/api/v1/assets/{asset.id}/renders/"
-    urls = asset.render_urls_json or {}
-    if asset.asset_type == "carousel":
-        expected = [*(urls.get("png") or []), urls.get("pdf")]
-        if len(urls.get("png") or []) != len(asset.slides_json or []) or not urls.get("pdf"):
-            return False
-    elif asset.asset_type == "clip":
-        expected = [urls.get("mp4")]
-    else:
+    try:
+        render_file_paths(asset)
         return True
-    return all(
-        isinstance(url, str)
-        and url.startswith(prefix)
-        and Path(url).name == url.removeprefix(prefix)
-        and (root / Path(url).name).is_file()
-        and (root / Path(url).name).stat().st_size > 0
-        for url in expected
-    )
+    except (OSError, ValueError):
+        return False
 
 
 def prepare_demo_showcase(db: Session, batch: ContentBatch) -> None:
@@ -209,9 +191,6 @@ def seed_demo(db: Session, *, generate_showcase: bool = True) -> dict:
                         rules_json=data.get("rules", {}),
                     )
                 )
-            else:
-                existing_brand.tone = data.get("tone", existing_brand.tone)
-                existing_brand.rules_json = data.get("rules", {})
     db.flush()
     source_lookup = {}
     source_dir = root / "sources"

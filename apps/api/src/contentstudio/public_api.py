@@ -13,9 +13,20 @@ from pathlib import Path
 from uuid import uuid4
 
 import httpx
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, Response, UploadFile
+from fastapi import (
+    APIRouter,
+    Depends,
+    File,
+    Form,
+    HTTPException,
+    Query,
+    Request,
+    Response,
+    UploadFile,
+)
 from fastapi.responses import FileResponse, StreamingResponse
 from sqlalchemy import func, select, update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from .auth import (
@@ -53,9 +64,13 @@ from .schemas import (
     BatchesOut,
     BatchInput,
     BootstrapOut,
+    BrandCreateInput,
+    BrandOut,
+    BrandRevisionInput,
     BrandsOut,
     CalendarOut,
     JobOut,
+    JobsOut,
     LoginInput,
     ReviewInput,
     ScheduledOut,
@@ -66,6 +81,7 @@ from .schemas import (
     TranscriptSourceInput,
 )
 from .service import (
+    AssetVersionConflict,
     asset_data,
     batch_data,
     brand_data,
@@ -81,6 +97,7 @@ from .service import (
     new_asset_version,
     package_operation_key,
     package_result_path,
+    render_file_paths,
     render_operation_key,
     scoped,
     segment_data,
@@ -117,6 +134,9 @@ def job_data(job: Job) -> dict:
         "progress": job.progress,
         "error": job.error,
         "result": job.result_json,
+        "batch_id": job.batch_id,
+        "asset_version_id": job.asset_version_id,
+        "updated_at": job.updated_at.isoformat(),
     }
 
 
@@ -387,7 +407,15 @@ def upload_source(
         )
     )
     if existing:
-        destination.unlink(missing_ok=True)
+        old_path = Path(existing.media_path).resolve() if existing.media_path else None
+        media_scope = (settings.media_root.resolve() / user.workspace_id).resolve()
+        if old_path is None or not old_path.is_relative_to(media_scope) or not old_path.is_file() or old_path.stat().st_size == 0:
+            existing.media_path = str(destination)
+            existing.mime_type = mime
+            existing.duration_ms = duration_ms
+            db.commit()
+        else:
+            destination.unlink(missing_ok=True)
         if existing.duration_ms <= 0:
             existing.duration_ms = duration_ms
             db.commit()
@@ -443,6 +471,8 @@ def correct_segment(
     transcript = latest_transcript(db, item)
     if not transcript:
         missing("Transcript")
+    if payload.expected_transcript_id and payload.expected_transcript_id != transcript.id:
+        raise HTTPException(409, "Transcript changed; reload before saving your correction")
     old_segments = [segment_data(s) for s in transcript_segments(db, transcript)]
     target = next((s for s in old_segments if s["id"] == segment_id), None)
     if target is None:
@@ -484,6 +514,47 @@ def brands(db: Session = Depends(get_db), user: User = Depends(current_user)):
         .order_by(BrandProfileVersion.name, BrandProfileVersion.version.desc())
     ).all()
     return {"items": [brand_data(b) for b in items]}
+
+
+@router.post("/brands", status_code=201, response_model=BrandOut)
+def create_brand(payload: BrandCreateInput, db: Session = Depends(get_db), user: User = Depends(operator)):
+    if db.scalar(select(BrandProfileVersion.id).where(
+        BrandProfileVersion.workspace_id == user.workspace_id,
+        func.lower(BrandProfileVersion.name) == payload.name.lower(),
+    )):
+        raise HTTPException(409, "Brand name already exists; revise its latest version")
+    item = BrandProfileVersion(workspace_id=user.workspace_id, name=payload.name,
+                               version=1, tone=payload.tone, rules_json=payload.rules.model_dump())
+    db.add(item)
+    try:
+        db.commit()
+    except IntegrityError as error:
+        db.rollback()
+        raise HTTPException(409, "Brand was created concurrently; reload brands") from error
+    return brand_data(item)
+
+
+@router.put("/brands/{brand_id}", status_code=201, response_model=BrandOut)
+def revise_brand(brand_id: str, payload: BrandRevisionInput, db: Session = Depends(get_db), user: User = Depends(operator)):
+    previous = scoped(db, BrandProfileVersion, brand_id, user.workspace_id) or missing("Brand")
+    latest = db.scalar(select(BrandProfileVersion).where(
+        BrandProfileVersion.workspace_id == user.workspace_id,
+        BrandProfileVersion.name == previous.name,
+    ).order_by(BrandProfileVersion.version.desc()).limit(1))
+    if latest.id != previous.id:
+        raise HTTPException(409, "Brand changed; reload and revise its latest version")
+    rules = payload.rules.model_dump()
+    if previous.tone == payload.tone and previous.rules_json == rules:
+        return brand_data(previous)
+    item = BrandProfileVersion(workspace_id=user.workspace_id, name=previous.name,
+                               version=previous.version + 1, tone=payload.tone, rules_json=rules)
+    db.add(item)
+    try:
+        db.commit()
+    except IntegrityError as error:
+        db.rollback()
+        raise HTTPException(409, "Brand changed concurrently; reload brands") from error
+    return brand_data(item)
 
 
 @router.post("/sources/{source_id}/batches", status_code=202, response_model=BatchDetailOut)
@@ -584,20 +655,33 @@ def edit_asset(
     asset = get_asset(db, asset_id, user)
     if not asset.is_current or asset.status == "stale":
         raise HTTPException(409, "Edit the current, source-valid version")
+    if payload.expected_hash and not secrets.compare_digest(asset.content_hash, payload.expected_hash):
+        raise HTTPException(409, "Asset changed; reload before saving")
     _, _, segments, brand = asset_context(db, asset)
-    if payload.clip_range:
+    if payload.clip_range is not None:
+        if asset.asset_type != "clip":
+            raise HTTPException(422, "Clip range is only valid for a clip")
         start, end = payload.clip_range.get("start_ms"), payload.clip_range.get("end_ms")
-        if not isinstance(start, int) or not isinstance(end, int) or end <= start:
+        if type(start) is not int or type(end) is not int or end <= start:
             raise HTTPException(422, "Invalid clip range")
+        if payload.clip_range.get("aspect_ratio", "9:16") not in ("9:16", "1:1", "16:9"):
+            raise HTTPException(422, "Invalid clip aspect ratio")
     if payload.slides is not None and asset.asset_type != "carousel":
         raise HTTPException(422, "Slides are only valid for a carousel")
-    updated = new_asset_version(
-        db,
-        asset,
-        payload.model_dump(exclude_unset=True),
-        segments,
-        brand.rules_json.get("prohibited_phrases", []),
-    )
+    if payload.source_segment_ids is not None and (
+        not payload.source_segment_ids or len(set(payload.source_segment_ids)) != len(payload.source_segment_ids)
+        or not set(payload.source_segment_ids).issubset({s["id"] for s in segments})
+    ):
+        raise HTTPException(422, "Choose distinct source segment IDs from this transcript")
+    try:
+        updated = new_asset_version(
+            db, asset, payload.model_dump(exclude_unset=True), segments,
+            brand.rules_json.get("prohibited_phrases", []),
+            max_social_chars=min(500, brand.rules_json.get("max_social_chars", 500)),
+        )
+    except AssetVersionConflict as error:
+        db.rollback()
+        raise HTTPException(409, str(error)) from error
     db.commit()
     return asset_data(updated, segments)
 
@@ -620,9 +704,14 @@ def regenerate_asset(asset_id: str, db: Session = Depends(get_db), user: User = 
     regenerated["source_segment_ids"] = [
         sid for sid in regenerated["source_segment_ids"] if sid in {s["id"] for s in segments}
     ]
-    updated = new_asset_version(
-        db, asset, regenerated, segments, brand.rules_json.get("prohibited_phrases", [])
-    )
+    try:
+        updated = new_asset_version(
+            db, asset, regenerated, segments, brand.rules_json.get("prohibited_phrases", []),
+            max_social_chars=min(500, brand.rules_json.get("max_social_chars", 500)),
+        )
+    except AssetVersionConflict as error:
+        db.rollback()
+        raise HTTPException(409, str(error)) from error
     db.commit()
     return asset_data(updated, segments)
 
@@ -689,9 +778,11 @@ def request_render(asset_id: str, db: Session = Depends(get_db), user: User = De
     return job_data(job)
 
 
+@router.get("/assets/{asset_id}/renders/{attempt_id}/{filename}")
 @router.get("/assets/{asset_id}/renders/{filename}")
 def rendered_file(
-    asset_id: str, filename: str, db: Session = Depends(get_db), user: User = Depends(current_user)
+    asset_id: str, filename: str, attempt_id: str | None = None,
+    db: Session = Depends(get_db), user: User = Depends(current_user)
 ):
     asset = get_asset(db, asset_id, user)
     if filename != Path(filename).name or filename.startswith("."):
@@ -701,10 +792,25 @@ def rendered_file(
     root = (
         get_settings().media_root.resolve() / user.workspace_id / asset.batch_id / asset.id
     ).resolve()
-    path = (root / filename).resolve()
-    if not path.is_relative_to(root) or not path.is_file():
+    path = (root / attempt_id / filename).resolve() if attempt_id else (root / filename).resolve()
+    try:
+        registered = render_file_paths(asset)
+    except (OSError, ValueError):
+        missing("Rendered file")
+    if not path.is_relative_to(root) or path not in registered:
         missing("Rendered file")
     return FileResponse(path)
+
+
+@router.get("/jobs", response_model=JobsOut)
+def jobs(batch_id: str | None = None, limit: int = Query(default=100, ge=1, le=100),
+         db: Session = Depends(get_db), user: User = Depends(current_user)):
+    query = select(Job).where(Job.workspace_id == user.workspace_id)
+    if batch_id:
+        get_batch(db, batch_id, user)
+        query = query.where(Job.batch_id == batch_id)
+    records = db.scalars(query.order_by(Job.updated_at.desc(), Job.id).limit(limit)).all()
+    return {"items": [job_data(record) for record in records]}
 
 
 @router.get("/jobs/{job_id}", response_model=JobOut)
@@ -727,7 +833,7 @@ def job_events(job_id: str, db: Session = Depends(get_db), user: User = Depends(
                 if latest is None:
                     return
                 yield f"data: {json.dumps(job_data(latest))}\n\n"
-                if latest.status in ("complete", "failed", "cancelled"):
+                if latest.status in ("complete", "failed", "cancelled", "stale"):
                     return
             time.sleep(2)
 
@@ -741,7 +847,10 @@ def cancel_job(job_id: str, db: Session = Depends(get_db), user: User = Depends(
     record = scoped(db, Job, job_id, user.workspace_id) or missing("Job")
     if record.status != "queued":
         raise HTTPException(409, "Only queued jobs can be cancelled")
-    record.status = "cancelled"
+    changed = db.execute(update(Job).where(Job.id == record.id, Job.status == "queued").values(status="cancelled"))
+    if changed.rowcount != 1:
+        db.rollback()
+        raise HTTPException(409, "Job started before cancellation; reload its status")
     db.commit()
     return job_data(record)
 

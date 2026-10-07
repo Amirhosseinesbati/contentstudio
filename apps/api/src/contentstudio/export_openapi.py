@@ -8,7 +8,7 @@ from .main import app
 
 def main():
     destination = Path("openapi.json")
-    destination.write_text(json.dumps(app.openapi(), indent=2), encoding="utf-8")
+    destination.write_text(json.dumps(app.openapi(), indent=2), encoding="utf-8", newline="\n")
     print(destination.resolve())
 
 

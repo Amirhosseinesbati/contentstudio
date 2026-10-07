@@ -1,6 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -20,6 +21,7 @@ class Settings(BaseSettings):
     session_hours: int = 12
     demo_password: str = "DemoStudio!2026"
     upload_limit_mb: int = 25
+    media_render_threads: int = Field(default=2, ge=1, le=16)
     model_provider: str = "fixture"
     model_id: str = ""
     openai_api_key: str = ""

@@ -1,0 +1,86 @@
+/* Lightweight loopback-only functional QA. Uses an installed browser and runtime;
+ * no download, user browser profile, external provider, or n8n trigger is used. */
+const path = require('node:path')
+const fs = require('node:fs')
+const assert = require('node:assert/strict')
+const playwright = require(process.env.CONTENTSTUDIO_PLAYWRIGHT || 'playwright')
+const root = path.resolve(__dirname, '..')
+const output = path.join(root, 'tmp', 'preview', 'qa')
+const base = process.env.CONTENTSTUDIO_PREVIEW_URL || 'http://127.0.0.1:4319'
+if (!/^http:\/\/(127\.0\.0\.1|localhost):\d+$/.test(base)) throw new Error('QA is restricted to a local preview')
+
+async function main() {
+  fs.mkdirSync(output, { recursive: true })
+  const browser = await playwright.chromium.launch({ headless: true, executablePath: process.env.CONTENTSTUDIO_BROWSER || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' })
+  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } })
+  const page = await context.newPage()
+  const errors = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  async function login(email) {
+    await page.getByLabel('Email address').fill(email)
+    await page.getByLabel('Password', { exact: true }).fill('DemoStudio!2026')
+    await page.getByRole('button', { name: 'Enter workspace' }).click()
+    await page.getByRole('navigation', { name: 'Main navigation' }).waitFor()
+  }
+  try {
+    await page.goto(base)
+    await login('admin@studio.test')
+    const batches = await (await page.request.get(`${base}/api/v1/batches`)).json()
+    const jobsResponse = await page.request.get(`${base}/api/v1/jobs?batch_id=${batches.items[0].id}`)
+    assert.equal(jobsResponse.status(), 200)
+    const savedJobs = await jobsResponse.json()
+    const savedPackage = savedJobs.items.find((job) => job.kind === 'package')
+    await page.reload()
+    await page.getByRole('navigation', { name: 'Main navigation' }).waitFor()
+    if (savedPackage) await page.getByText(`Package assembly: ${savedPackage.status}`, { exact: true }).waitFor()
+    await page.getByRole('button', { name: /Source library/ }).click()
+    await page.getByText('Brand profiles and version history', { exact: true }).click()
+    await page.getByRole('button', { name: 'Create brand profile', exact: true }).click()
+    const brandName = `QA Studio ${Date.now()}`
+    await page.getByLabel('Brand name', { exact: true }).fill(brandName)
+    await page.getByLabel('Voice and tone').fill('Precise, calm and source led')
+    await page.getByLabel('Prohibited phrases').fill('unsupported certainty\ninstant success')
+    await page.getByLabel('Social draft character limit').fill('280')
+    await page.getByRole('button', { name: 'Save brand', exact: true }).click()
+    await page.getByRole('button', { name: `Revise ${brandName}`, exact: true }).waitFor()
+    await page.getByRole('button', { name: `Revise ${brandName}`, exact: true }).click()
+    await page.getByLabel('Voice and tone').fill('Practical, direct and carefully sourced')
+    await page.getByRole('button', { name: 'Save version 2', exact: true }).click()
+    await page.getByText(`${brandName} · v2`, { exact: true }).waitFor()
+    const brands = await (await page.request.get(`${base}/api/v1/brands`)).json()
+    assert.equal(brands.items.filter((brand) => brand.name === brandName).length, 2)
+    const sources = await (await page.request.get(`${base}/api/v1/sources`)).json()
+    const owned = sources.items.find((source) => source.kind === 'owned_media' && source.latest_transcript_version_id)
+    assert(owned, 'Owned synthetic source required')
+    await page.route('**/api/v1/sources/**/media', (route) => route.abort())
+    await page.locator('.source-list-item').filter({ hasText: owned.title }).click()
+    await page.getByRole('button', { name: 'Inspect transcript', exact: true }).click()
+    await page.getByRole('button', { name: 'Retry playback' }).waitFor()
+    await page.unroute('**/api/v1/sources/**/media')
+    await page.getByRole('button', { name: 'Retry playback' }).click()
+    await page.waitForFunction(() => { const video = document.querySelector('video'); return video && video.readyState > 0 && video.duration > 0 })
+    const sizes = []
+    for (const width of [1440, 1024, 390]) {
+      await page.setViewportSize({ width, height: 1000 })
+      await page.screenshot({ path: path.join(output, `source-${width}.png`), fullPage: true })
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)
+      assert.equal(overflow, false, `Horizontal overflow at ${width}`)
+      sizes.push({ width, overflow })
+    }
+    await page.setViewportSize({ width: 1440, height: 1000 })
+    await page.getByRole('button', { name: 'Sign out', exact: true }).click()
+    await page.getByLabel('Email address').waitFor()
+    await login('viewer@studio.test')
+    await page.getByRole('button', { name: /Source library/ }).click()
+    await page.getByText('Brand profiles and version history', { exact: true }).click()
+    assert(await page.getByRole('button', { name: 'Create brand profile', exact: true }).isDisabled())
+    assert(await page.getByRole('button', { name: `Revise ${brandName}`, exact: true }).isDisabled())
+    const forbidden = await page.request.post(`${base}/api/v1/brands`, { data: { name: 'Viewer blocked', tone: 'Precise', rules: { accent: '#123456' } } })
+    assert.equal(forbidden.status(), 403)
+    assert.deepEqual(errors, [])
+    const report = { label: 'Local synthetic functional QA; visual direction pending', base, brand_version_authoring: true, media_failure_and_retry: true, viewer_boundary: true, logout_transition: true, durable_jobs_api: true, package_status_restored_after_reload: !!savedPackage, sizes, page_errors: errors, external_workflows_executed: false }
+    fs.writeFileSync(path.join(output, 'portal-checkpoint.json'), JSON.stringify(report, null, 2))
+    console.log(JSON.stringify(report, null, 2))
+  } finally { await browser.close() }
+}
+main().catch((error) => { console.error(error); process.exitCode = 1 })

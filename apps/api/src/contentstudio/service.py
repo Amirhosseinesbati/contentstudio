@@ -3,6 +3,7 @@
 import re
 from datetime import UTC, timedelta
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 from uuid import UUID, uuid4
 
 from sqlalchemy import func, select, update
@@ -32,6 +33,10 @@ class GenerationInProgress(RuntimeError):
 
 class GenerationSourceChanged(RuntimeError):
     """The pinned source changed while a bundle was being generated."""
+
+
+class AssetVersionConflict(RuntimeError):
+    """The source or current asset changed while an editor was working."""
 
 
 def scoped(db: Session, model, item_id: str, workspace_id: str):
@@ -96,6 +101,11 @@ def source_data(db: Session, source: SourceAsset) -> dict:
 
 def source_detail(db: Session, source: SourceAsset) -> dict:
     transcript = latest_transcript(db, source)
+    media_available = False
+    if source.media_path:
+        root = (get_settings().media_root.resolve() / source.workspace_id).resolve()
+        path = Path(source.media_path).resolve()
+        media_available = path.is_relative_to(root) and path.is_file() and path.stat().st_size > 0
     return {
         "source": source_data(db, source),
         "transcript": {
@@ -107,6 +117,7 @@ def source_detail(db: Session, source: SourceAsset) -> dict:
         if transcript
         else None,
         "media_url": f"/api/v1/sources/{source.id}/media" if source.media_path else None,
+        "media_status": "available" if media_available else "missing" if source.media_path else "transcript_only",
     }
 
 
@@ -172,12 +183,55 @@ def render_operation_key(asset: ContentAssetVersion) -> str:
     return f"render:{asset.id}:{asset.content_hash[:24]}"
 
 
+def render_file_paths(asset: ContentAssetVersion) -> list[Path]:
+    """Resolve the complete registered render set inside this asset's storage scope."""
+    urls = asset.render_urls_json or {}
+    png = urls.get("png") or []
+    if not isinstance(png, list):
+        raise ValueError("Invalid carousel file registry")
+    if asset.asset_type == "carousel":
+        if len(png) != len(asset.slides_json) or not urls.get("pdf"):
+            raise FileNotFoundError("Carousel render is incomplete; render again")
+        registered = [*png, urls["pdf"]]
+    elif asset.asset_type == "clip":
+        if not urls.get("mp4"):
+            raise FileNotFoundError("Clip render is incomplete; render again")
+        registered = [urls["mp4"]]
+    else:
+        return []
+    root = (get_settings().media_root.resolve() / asset.workspace_id / asset.batch_id / asset.id).resolve()
+    prefix = f"/api/v1/assets/{asset.id}/renders/"
+    paths = []
+    for url in registered:
+        if not isinstance(url, str) or not url.startswith(prefix) or urlsplit(url).query:
+            raise ValueError("Rendered file is outside the asset registry")
+        relative = unquote(url[len(prefix):])
+        path = (root / relative).resolve()
+        if not path.is_relative_to(root) or not path.is_file() or path.stat().st_size == 0:
+            raise FileNotFoundError("Rendered files are unavailable; render again before packaging")
+        paths.append(path)
+    return paths
+
+
+def recover_missing_render(db: Session, asset: ContentAssetVersion) -> bool:
+    if asset.status != "rendered":
+        return False
+    try:
+        render_file_paths(asset)
+    except (OSError, ValueError):
+        asset.status = "approved"
+        asset.render_urls_json = {"png": [], "pdf": None, "mp4": None}
+        invalidate_batch_package(db, asset.workspace_id, asset.batch_id)
+        return True
+    return False
+
+
 def package_operation_key(batch_id: str, assets: list[ContentAssetVersion]) -> str:
     fingerprint = [
         (asset.id, asset.content_hash, asset.status, asset.render_urls_json)
         for asset in sorted(assets, key=lambda item: item.id)
     ]
-    return f"package:{batch_id}:{canonical_hash(fingerprint)[:24]}"
+    return f"package:{batch_id}:{canonical_hash({'schema_version': 2, 'assets': fingerprint})[:24]}"
 
 
 def package_file_name(job_id: str, lease_token: str) -> str:
@@ -262,6 +316,11 @@ def ensure_job(
     if kind == "package" and job.status == "complete" and package_result_path(job) is None:
         job.status = "stale"
         db.flush()
+    if kind == "render" and job.status == "complete":
+        asset = scoped(db, ContentAssetVersion, asset_id or job.asset_version_id, workspace_id)
+        if asset and recover_missing_render(db, asset):
+            job.status = "stale"
+            db.flush()
     if job.status in ("failed", "cancelled", "stale"):
         db.execute(
             update(Job)
@@ -500,7 +559,8 @@ def generate_for_batch(db: Session, batch: ContentBatch) -> dict:
             )
         for generated in bundle.assets:
             item = generated.model_dump()
-            warnings = validate_asset(item, segments, prohibited)
+            warnings = validate_asset(item, segments, prohibited,
+                                      min(500, brand.rules_json.get("max_social_chars", 500)))
             db.add(
                 ContentAssetVersion(
                     workspace_id=workspace_id,
@@ -561,7 +621,21 @@ def new_asset_version(
     changes: dict,
     segments: list[dict],
     prohibited: list[str],
+    max_social_chars: int = 500,
 ) -> ContentAssetVersion:
+    batch = scoped(db, ContentBatch, asset.batch_id, asset.workspace_id)
+    source = db.scalar(select(SourceAsset).where(
+        SourceAsset.id == batch.source_asset_id, SourceAsset.workspace_id == asset.workspace_id,
+    ).with_for_update())
+    latest = latest_transcript(db, source)
+    current_segments = [segment_data(s) for s in transcript_segments(db, latest)] if latest else []
+    if canonical_hash(current_segments) != canonical_hash(segments):
+        raise AssetVersionConflict("Transcript changed while editing; reload its latest version")
+    changed = db.execute(update(ContentAssetVersion).where(
+        ContentAssetVersion.id == asset.id, ContentAssetVersion.is_current.is_(True),
+    ).values(is_current=False))
+    if changed.rowcount != 1:
+        raise AssetVersionConflict("Asset changed while editing; reload its current version")
     title = changes.get("title") if changes.get("title") is not None else asset.title
     text = changes.get("text") if changes.get("text") is not None else asset.text
     slides = changes.get("slides") if changes.get("slides") is not None else asset.slides_json
@@ -594,19 +668,24 @@ def new_asset_version(
         slides_json=slides,
         clip_range_json=clip_range,
         source_segment_ids=source_ids,
-        warnings_json=validate_asset(candidate, segments, prohibited),
+        warnings_json=validate_asset(candidate, segments, prohibited, max_social_chars),
         status="review_pending",
         content_hash=content_hash(title, text, slides, clip_range, source_ids),
         render_urls_json={"png": [], "pdf": None, "mp4": None},
     )
-    asset.is_current = False
     invalidate_asset_dependents(db, asset)
+    batch.status = "review"
+    batch.error = None
     db.add(updated)
     db.flush()
     return updated
 
 
 def invalidate_batch_package(db: Session, workspace_id: str, batch_id: str) -> None:
+    db.execute(update(ContentBatch).where(
+        ContentBatch.workspace_id == workspace_id, ContentBatch.id == batch_id,
+        ContentBatch.status == "complete",
+    ).values(status="review"))
     for job in db.scalars(
         select(Job).where(
             Job.workspace_id == workspace_id,
@@ -621,6 +700,10 @@ def invalidate_batch_package(db: Session, workspace_id: str, batch_id: str) -> N
 
 def invalidate_asset_dependents(db: Session, asset: ContentAssetVersion) -> None:
     invalidate_batch_package(db, asset.workspace_id, asset.batch_id)
+    db.execute(update(Job).where(
+        Job.workspace_id == asset.workspace_id, Job.asset_version_id == asset.id,
+        Job.kind == "render", Job.status.in_(["queued", "running", "complete"]),
+    ).values(status="stale", result_json={}))
     for draft in db.scalars(
         select(PublicationDraft).where(
             PublicationDraft.workspace_id == asset.workspace_id,
